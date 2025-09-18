@@ -1,7 +1,11 @@
+"""
+Training Survey App
+Built with Streamlit for DMV Training (prototype demo)
+"""
 import streamlit as st
 
-# Add the DMV logo and slogan at the top
-st.image("DMV New Logo.png", width=100)
+st.title("Survey Prototype Demo")
+st.caption("Powered by Soulware Systems | WrightPlace4Solutions")
 
 # Set the color scheme using a bit of custom styling
 st.markdown(
