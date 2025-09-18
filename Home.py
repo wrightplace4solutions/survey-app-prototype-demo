@@ -1,6 +1,6 @@
 """
 Training Survey App
-Built with Streamlit for DMV Training (prototype demo)
+Built with Streamlit for Training Survey (prototype demo)
 """
 import streamlit as st
 
