@@ -1,8 +1,11 @@
+"""
+Training Survey App
+Built with Streamlit for DMV Training (prototype demo)
+"""
 import streamlit as st
 
-# Add the DMV logo and slogan at the top
-st.image("path_to_your_dmv_logo.png", width=100)  # Adjust the width as needed
-st.markdown("<h3 style='text-align: center; color: blue;'>Always Driving Forward</h3>", unsafe_allow_html=True)
+st.title("Survey Prototype Demo")
+st.caption("Powered by Soulware Systems | WrightPlace4Solutions")
 
 # Set the color scheme using a bit of custom styling
 st.markdown(
