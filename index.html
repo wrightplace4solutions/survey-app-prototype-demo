@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DMV Training Survey</title>
+  <title>Survey App Prototype Demo</title>
   <style>
     body {
       margin: 0;
@@ -13,6 +13,21 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
+    }
+    header {
+      background: #0d1b2a;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+    header p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.85;
     }
     iframe {
       flex: 1;
@@ -34,13 +49,18 @@
 </head>
 <body>
 
+  <header>
+    <h1>Survey App Prototype Demo</h1>
+    <p>Powered by Soulware Systems</p>
+  </header>
+
   <iframe 
-    src="https://dmv-training-survey-app.streamlit.app"
-    title="DMV Training Survey">
+    src="https://survey-app-prototype-demo.streamlit.app"
+    title="Survey App Prototype">
   </iframe>
 
   <footer>
-    Powered by <span>Soulware Systems</span> | A WrightPlace4Solutions Company
+    © 2025 <span>Soulware Systems</span> | A WrightPlace4Solutions Company
   </footer>
 
 </body>
