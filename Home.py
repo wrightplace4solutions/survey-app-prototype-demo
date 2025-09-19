@@ -5,7 +5,7 @@ from utils import send_email, export_to_excel
 
 st.set_page_config(page_title="Training Feedback Survey", layout="wide")
 
-# Company Branding
+# Company Branding - Updated with all questions and CSC locations
 # st.image("assets/company_logo.png", width=120)  # Add your company logo here
 st.markdown("<h3 style='text-align: center; color: #8B2635;'>Excellence Through Training</h3>", unsafe_allow_html=True)
 
