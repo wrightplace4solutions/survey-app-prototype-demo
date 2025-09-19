@@ -1,6 +1,25 @@
 import streamlit as st
 
-st.title("Welcome to the DMV Training Feedback Survey")
+# Set consistent styling with main app
+st.markdown(
+    """
+    <style>
+        body {
+            color: #2F1B14;
+            background-color: #FAF7F0; /* cream background */
+        }
+        .stApp {
+            color: #2F1B14;
+            background-color: #FEFCF7; /* cream white content background */
+        }
+        h1, h2, h3 {
+            color: #8B2635; /* burgundy for headers */
+        }
+    </style>
+    """, unsafe_allow_html=True
+)
+
+st.title("Welcome to the Training Feedback Survey")
 
 # Placeholder for avatar video embed
 st.video("assets/avatar_intro.mp4")

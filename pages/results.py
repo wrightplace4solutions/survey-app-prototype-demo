@@ -1,9 +1,36 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+import os
 
-st.set_page_config(page_title="DMV Training Survey Results", layout="wide")
-st.title("📊 DMV Training Survey Results Dashboard")
+st.set_page_config(page_title="Training Survey Results", layout="wide")
+
+# Set consistent styling with main app
+st.markdown(
+    """
+    <style>
+        body {
+            color: #2F1B14;
+            background-color: #FAF7F0; /* cream background */
+        }
+        .stApp {
+            color: #2F1B14;
+            background-color: #FEFCF7; /* cream white content background */
+        }
+        h1, h2, h3 {
+            color: #8B2635; /* burgundy for headers */
+        }
+        .stSelectbox > div > div {
+            background-color: #FEFCF7;
+        }
+        .stDataFrame {
+            background-color: #FEFCF7;
+        }
+    </style>
+    """, unsafe_allow_html=True
+)
+
+st.title("📊 Training Survey Results Dashboard")
 
 # Load data
 data_file = "survey_data.csv"

@@ -10,7 +10,7 @@ def export_to_excel(data, filename="survey_results.xlsx"):
 def send_email(subject, body, to_emails):
     msg = MIMEText(body)
     msg['Subject'] = subject
-    msg['From'] = "noreply@dmv-training-app.com"
+    msg['From'] = "noreply@training-survey-app.com"
     msg['To'] = ", ".join(to_emails)
 
     try:

@@ -1,4 +1,4 @@
-# DMV Training Feedback Survey App
+# Training Feedback Survey App
 
 ## Features
 - AI Avatar Intro (HeyGen video)
