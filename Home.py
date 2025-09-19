@@ -3,14 +3,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from utils import send_email, export_to_excel
 
-st.set_page_config(page_title="DMV Training Feedback Survey", layout="wide")
+st.set_page_config(page_title="Training Feedback Survey", layout="wide")
 
-# DMV Branding
-st.image("assets/DMV New Logo.png", width=120)
-st.markdown("<h3 style='text-align: center; color: blue;'>Always Driving Forward</h3>", unsafe_allow_html=True)
 
 # Title
-st.title("🚗 DMV Training Feedback Survey")
+st.title("Training Feedback Survey")
 
 # --- Demographics ---
 st.header("Demographics")
@@ -62,7 +59,7 @@ onboard_support_desc = st.text_area("If yes, describe how they support new hires
 
 # --- Research/AI Feedback ---
 st.header("Feedback on Survey Experience")
-ai_feedback = st.slider("How did you like the AI survey structure?", min_value=1, max_value=5, value=5, step=1)
+ai_feedback = st.slider("How did you like the hybrid AI guided survey structure?", min_value=1, max_value=5, value=5, step=1)
 st.write("👉 5 = Loved it | 1 = Didn't like at all")
 ai_comments = st.text_area("Comments on the AI survey experience")
 recommend = st.radio("Would you recommend this survey app for colleagues/departments?", ["Yes", "No", "Maybe"])
