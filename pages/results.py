@@ -5,6 +5,9 @@ import os
 
 st.set_page_config(page_title="Training Survey Results", layout="wide")
 
+# Set the page name for the sidebar navigation
+st.sidebar.title("Results")
+
 # Set consistent styling with main app
 st.markdown(
     """
