@@ -1,10 +1,19 @@
+"""DMV Training Feedback Survey Application.
+
+This Streamlit application collects feedback on DMV training programs
+including Title Class, FDR1 & DLID, Driver Examiners, Compliance, and Advanced training.
+"""
+
 import streamlit as st
 
 st.set_page_config(page_title="Training Feedback Survey", layout="wide")
 
 # Company Branding - Updated with all questions and CSC locations
 # st.image("assets/company_logo.png", width=120)  # Add your company logo here
-st.markdown("<h3 style='text-align: center; color: #8B2635;'>Excellence Through Training</h3>", unsafe_allow_html=True)
+st.markdown(
+    "<h3 style='text-align: center; color: #8B2635;'>Excellence Through Training</h3>",
+    unsafe_allow_html=True
+)
 
 # Set the color scheme using a bit of custom styling
 st.markdown(
@@ -42,15 +51,25 @@ st.write("Welcome! We'd love your feedback on how our training programs are prep
 st.header("Demographics")
 name = st.text_input("Your Name *")
 role = st.text_input("Your Role/Title *")
-csc = st.selectbox("Select your CSC", [
-    "Ashland", "Chester", "Chesterfield", "East Henrico", "Emporia", "Ft Gregg Adams",
-    "Hopewell", "Kimanock", "Petersburg", "Richmond Center (HQ)", "Tappahannock",
-    "West Henrico", "Williamsburg", "Other (please list)"
-])
+csc_options = [
+    "Ashland", "Chester", "Chesterfield", "East Henrico", "Emporia", 
+    "Ft Gregg Adams", "Hopewell", "Kimanock", "Petersburg", 
+    "Richmond Center (HQ)", "Tappahannock", "West Henrico", 
+    "Williamsburg", "Other (please list)"
+]
+csc = st.selectbox("Select your CSC", csc_options)
 email = st.text_input("Your Email (optional)")
 
 # Helper function for sliders
 def rating_slider(label: str) -> int:
+    """Create a rating slider with standardized scale and labels.
+    
+    Args:
+        label: The label text for the slider
+        
+    Returns:
+        The selected rating value (1-5)
+    """
     val = st.slider(label, min_value=1, max_value=5, value=5, step=1)
     st.write("👉 5 = Excellent | 1 = Poor")
     return val
@@ -58,48 +77,79 @@ def rating_slider(label: str) -> int:
 # --- Title Class Section ---
 st.header("Title Class")
 title_rating = rating_slider("Overall effectiveness of Title Class training")
-st.text_input("What skills do you find most important for agents coming out of the Title class?")
-st.text_input("What specific challenges do they usually face when they return to their roles?")
+title_skills = st.text_input(
+    "What skills do you find most important for agents coming out of the Title class?"
+)
+title_challenges = st.text_input(
+    "What specific challenges do they usually face when they return to their roles?"
+)
 title_comments = st.text_area("Additional comments on Title training")
 
 # --- FDR1 & DLID Section ---
 st.header("FDR1 and DLID (Driver's License & ID)")
 fdr_rating = rating_slider("How confident are agents after FDR1/DLID training?")
-st.text_input("After completing the FDR1 and DLID courses, what improvements do you expect to see in agents' performance?")
-st.text_input("Are there any particular document or ID verification tasks you want them to master?")
+fdr_improvements = st.text_input(
+    "After completing the FDR1 and DLID courses, what improvements do you expect "
+    "to see in agents' performance?"
+)
+fdr_verification = st.text_input(
+    "Are there any particular document or ID verification tasks you want them to "
+    "master?"
+)
 fdr_comments = st.text_area("Additional comments on FDR1/DLID training")
 
 # --- Driver Examiner Section ---
 st.header("Driver Examiners Course")
 de_rating = rating_slider("Readiness after Driver Examiner training")
-st.text_input("For the Driver Examiners course, what additional responsibilities should they be prepared to take on?")
+de_responsibilities = st.text_input(
+    "For the Driver Examiners course, what additional responsibilities should they "
+    "be prepared to take on?"
+)
 de_comments = st.text_area("Additional comments on Driver Examiner training")
 
 # --- Compliance Section ---
 st.header("Compliance Course")
 compliance_rating = rating_slider("Compliance readiness after training")
-st.text_input("After the Compliance course, what compliance-related skills do you need them to have?")
+compliance_skills = st.text_input(
+    "After the Compliance course, what compliance-related skills do you need them "
+    "to have?"
+)
 compliance_comments = st.text_area("Additional comments on Compliance training")
 
 # --- Advanced Section ---
 st.header("Advanced Training (VDH, FDR II)")
 adv_rating = rating_slider("Advanced training effectiveness")
-st.text_input("For those who've completed VDH and FDR II, what advanced responsibilities are you looking for them to handle?")
-st.text_area("Any other suggestions or focus areas for these advanced levels?")
+adv_responsibilities = st.text_input(
+    "For those who've completed VDH and FDR II, what advanced responsibilities are "
+    "you looking for them to handle?"
+)
+adv_suggestions = st.text_area("Any other suggestions or focus areas for these advanced levels?")
 adv_comments = st.text_area("Additional comments on Advanced training")
 
 # --- Onboarding Questions ---
 st.header("Onboarding Process")
-onboard_desc = st.text_area("Describe how a new hire is onboarded in your CSC  from Day 1 until their first class.")
-onboard_support = st.radio("Are they assigned a dedicated coach/senior/work leader for new hires?", ["Yes", "No"])
+onboard_desc = st.text_area(
+    "Describe how a new hire is onboarded in your CSC from Day 1 until their "
+    "first class."
+)
+onboard_support = st.radio(
+    "Are they assigned a dedicated coach/senior/work leader for new hires?", 
+    ["Yes", "No"]
+)
 onboard_support_desc = st.text_area("If yes, describe how they support new hires.")
 
 # --- Research/AI Feedback ---
 st.header("Feedback on Survey Experience")
-ai_feedback = st.slider("How did you like the hybrid AI guided survey structure?", min_value=1, max_value=5, value=5, step=1)
+ai_feedback = st.slider(
+    "How did you like the hybrid AI guided survey structure?", 
+    min_value=1, max_value=5, value=5, step=1
+)
 st.write("👉 5 = Loved it | 1 = Didn't like at all")
 ai_comments = st.text_area("Comments on the AI survey experience")
-recommend = st.radio("Would you recommend this survey app for colleagues/departments?", ["Yes", "No", "Maybe"])
+recommend = st.radio(
+    "Would you recommend this survey app for colleagues/departments?", 
+    ["Yes", "No", "Maybe"]
+)
 recommend_comments = st.text_area("Why or why not?")
 
 # --- Submission ---
