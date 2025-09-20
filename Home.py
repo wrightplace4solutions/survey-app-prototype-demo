@@ -1,7 +1,4 @@
 import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-from utils import send_email, export_to_excel
 
 st.set_page_config(page_title="Training Feedback Survey", layout="wide")
 
@@ -53,7 +50,7 @@ csc = st.selectbox("Select your CSC", [
 email = st.text_input("Your Email (optional)")
 
 # Helper function for sliders
-def rating_slider(label):
+def rating_slider(label: str) -> int:
     val = st.slider(label, min_value=1, max_value=5, value=5, step=1)
     st.write("👉 5 = Excellent | 1 = Poor")
     return val
