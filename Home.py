@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
+from datetime import datetime
 from utils import send_email, export_to_excel
 
 st.set_page_config(page_title="Training Feedback Survey", layout="wide")
@@ -13,99 +15,225 @@ st.markdown("<h3 style='text-align: center; color: #8B2635;'>Excellence Through 
 st.markdown(
     """
     <style>
-        body {
-            color: #2F1B14;
-            background-color: #FAF7F0; /* cream background */
-        }
-        .stApp {
-            color: #2F1B14;
-            background-color: #FEFCF7; /* cream white content background */
-        }
-        h1, h2, h3 {
-            color: #8B2635; /* burgundy for headers */
-        }
-        .stSelectbox > div > div {
-            background-color: #FEFCF7;
-        }
-        .stTextInput > div > div > input {
-            background-color: #FEFCF7;
-        }
-        .stTextArea > div > div > textarea {
-            background-color: #FEFCF7;
-        }
+        body { color: #2F1B14; background-color: #FAF7F0; }
+        .stApp { color: #2F1B14; background-color: #FEFCF7; }
+        h1, h2, h3 { color: #8B2635; }
+        .stSelectbox > div > div { background-color: #FEFCF7; }
+        .stTextInput > div > div > input { background-color: #FEFCF7; }
+        .stTextArea > div > div > textarea { background-color: #FEFCF7; }
+        .rank-warning { color: #8B2635; font-weight: 600; }
     </style>
     """, unsafe_allow_html=True
 )
 
-# Title and Introduction
+# ----- Helpers -----
+def rating_slider(label: str) -> int:
+    val = st.slider(label, min_value=1, max_value=5, value=5, step=1)
+    st.write("👉 5 = Excellent | 1 = Poor")
+    return val
+
+def skill_select_with_ranking(prompt: str, options: list[str]) -> tuple[str, dict]:
+    """Render a selectbox with options plus 'All of the above'.
+    If 'All of the above' is selected, show per-item ranking number_inputs.
+    Returns (selected_option, rankings_dict). rankings_dict is empty unless All of the above is chosen.
+    """
+    base_opts = [o for o in options if o != "All of the above"]
+    # Ensure All of the above at end
+    opts = base_opts + (["All of the above"] if "All of the above" not in options else [])
+    chosen = st.selectbox(prompt, opts, index=0)
+    rankings: dict[str, int] = {}
+    if chosen == "All of the above":
+        st.write("Please rank these skills in order of importance (1 = most important, {n} = least important):".format(n=len(base_opts)))
+        cols = st.columns(min(4, len(base_opts)))
+        # Create a section-specific key so widgets remain unique
+        section_key = st.session_state.get('section_key', 'section')
+        for i, skill in enumerate(base_opts):
+            with cols[i % len(cols)]:
+                rankings[skill] = st.number_input(
+                    f"Rank – {skill}",
+                    min_value=1, max_value=len(base_opts), step=1,
+                    key=f"rank_{section_key}_{i}_{skill}"
+                )
+        # Soft validation
+        vals = [v for v in rankings.values() if v is not None]
+        if len(vals) != len(base_opts):
+            st.caption("Fill a rank for each skill.")
+        elif len(set(vals)) != len(vals):
+            st.markdown("<div class='rank-warning'>⚠️ Each rank must be unique (no ties). Please adjust.</div>", unsafe_allow_html=True)
+    return chosen, rankings
+
 st.title("📋 Training Feedback Survey")
-st.write("Welcome! We'd love your feedback on how our training programs are preparing your team.")
+st.write("Thank you for taking the time to complete this survey. We'd love your feedback on how our training programs are preparing your team.")
 
 # --- Demographics ---
 st.header("Demographics")
 name = st.text_input("Your Name *")
 role = st.text_input("Your Role/Title *")
-csc = st.selectbox("Select your CSC", [
-    "Ashland", "Chester", "Chesterfield", "East Henrico", "Emporia", "Ft Gregg Adams",
-    "Hopewell", "Kimanock", "Petersburg", "Richmond Center (HQ)", "Tappahannock",
-    "West Henrico", "Williamsburg", "Other (please list)"
-])
+csc = st.selectbox(
+    "Select your CSC",
+    [
+        "Ashland",
+        "Chester",
+        "Chesterfield",
+        "East Henrico",
+        "Emporia",
+        "Ft Gregg Adams",
+        "Hopewell",
+        "Kilmarnock",
+        "Petersburg",
+        "Richmond Center (HQ)",
+        "Tappahannock",
+        "West Henrico",
+        "Williamsburg",
+        "Other (please list)",
+    ],
+)
 email = st.text_input("Your Email (optional)")
 
-# Helper function for sliders
-def rating_slider(label):
-    val = st.slider(label, min_value=1, max_value=5, value=5, step=1)
-    st.write("👉 5 = Excellent | 1 = Poor")
-    return val
+# Prepare a container to accumulate responses (kept in-memory; integrate with persistence as needed)
+responses = {
+    "name": name,
+    "role": role,
+    "csc": csc,
+    "email": email,
+}
 
 # --- Title Class Section ---
 st.header("Title Class")
-title_rating = rating_slider("Overall effectiveness of Title Class training")
-st.text_input("What skills do you find most important for agents coming out of the Title class?")
-st.text_input("What specific challenges do they usually face when they return to their roles?")
-title_comments = st.text_area("Additional comments on Title training")
+st.session_state["section_key"] = "title"
+responses["title_overall"] = rating_slider("Overall effectiveness of Title Class training")
+_title_choice, _title_ranks = skill_select_with_ranking(
+    "1. What skills do you find most important for agents coming out of the Title class?",
+    [
+        "Accuracy in data entry",
+        "Understanding title documentation",
+        "Customer communication",
+        "Problem-solving with difficult cases",
+        "All of the above",
+    ],
+)
+responses["title_skill_choice"] = _title_choice
+responses.update({f"title_rank_{k}": v for k, v in _title_ranks.items()})
+responses["title_challenges"] = st.text_input("2. What specific challenges do they usually face when they return to their roles?")
+responses["title_comments"] = st.text_area("Additional comments on Title training")
 
 # --- FDR1 & DLID Section ---
 st.header("FDR1 and DLID (Driver's License & ID)")
-fdr_rating = rating_slider("How confident are agents after FDR1/DLID training?")
-st.text_input("After completing the FDR1 and DLID courses, what improvements do you expect to see in agents' performance?")
-st.text_input("Are there any particular document or ID verification tasks you want them to master?")
-fdr_comments = st.text_area("Additional comments on FDR1/DLID training")
+st.session_state["section_key"] = "fdr1_dlid"
+responses["fdr_overall"] = rating_slider("How confident are agents after FDR1/DLID training?")
+_fdr_choice, _fdr_ranks = skill_select_with_ranking(
+    "1. Which skills are most important post-FDR1/DLID?",
+    [
+        "ID & document verification accuracy",
+        "System navigation speed",
+        "Fraud detection basics",
+        "Customer communication",
+        "All of the above",
+    ],
+)
+responses["fdr_skill_choice"] = _fdr_choice
+responses.update({f"fdr_rank_{k}": v for k, v in _fdr_ranks.items()})
+responses["fdr_expectations"] = st.text_input("2. After completing the FDR1 and DLID courses, what improvements do you expect to see in agents' performance?")
+responses["fdr_tasks_mastery"] = st.text_input("3. Are there any particular document or ID verification tasks you want them to master?")
+responses["fdr_comments"] = st.text_area("Additional comments on FDR1/DLID training")
 
 # --- Driver Examiner Section ---
 st.header("Driver Examiners Course")
-de_rating = rating_slider("Readiness after Driver Examiner training")
-st.text_input("For the Driver Examiners course, what additional responsibilities should they be prepared to take on?")
-de_comments = st.text_area("Additional comments on Driver Examiner training")
+st.session_state["section_key"] = "de"
+responses["de_overall"] = rating_slider("Readiness after Driver Examiner training")
+_de_choice, _de_ranks = skill_select_with_ranking(
+    "1. What skills matter most for Driver Examiners?",
+    [
+        "Road test protocol adherence",
+        "Safety & vehicle inspection",
+        "Customer instruction & communication",
+        "Documentation accuracy",
+        "All of the above",
+    ],
+)
+responses["de_skill_choice"] = _de_choice
+responses.update({f"de_rank_{k}": v for k, v in _de_ranks.items()})
+responses["de_responsibilities"] = st.text_input("2. For the Driver Examiners course, what additional responsibilities should they be prepared to take on?")
+responses["de_comments"] = st.text_area("Additional comments on Driver Examiner training")
 
 # --- Compliance Section ---
 st.header("Compliance Course")
-compliance_rating = rating_slider("Compliance readiness after training")
-st.text_input("After the Compliance course, what compliance-related skills do you need them to have?")
-compliance_comments = st.text_area("Additional comments on Compliance training")
+st.session_state["section_key"] = "compliance"
+responses["compliance_overall"] = rating_slider("Compliance readiness after training")
+_comp_choice, _comp_ranks = skill_select_with_ranking(
+    "1. Which compliance-related skills are most important?",
+    [
+        "Regulation & policy knowledge",
+        "Exception handling & escalation",
+        "Audit trail documentation",
+        "Data privacy & confidentiality",
+        "All of the above",
+    ],
+)
+responses["compliance_skill_choice"] = _comp_choice
+responses.update({f"compliance_rank_{k}": v for k, v in _comp_ranks.items()})
+responses["compliance_needed"] = st.text_input("2. After the Compliance course, what compliance-related skills do you need them to have?")
+responses["compliance_comments"] = st.text_area("Additional comments on Compliance training")
 
 # --- Advanced Section ---
 st.header("Advanced Training (VDH, FDR II)")
-adv_rating = rating_slider("Advanced training effectiveness")
-st.text_input("For those who've completed VDH and FDR II, what advanced responsibilities are you looking for them to handle?")
-st.text_area("Any other suggestions or focus areas for these advanced levels?")
-adv_comments = st.text_area("Additional comments on Advanced training")
+st.session_state["section_key"] = "advanced"
+responses["advanced_overall"] = rating_slider("Advanced training effectiveness")
+_adv_choice, _adv_ranks = skill_select_with_ranking(
+    "1. Which advanced skills are most important?",
+    [
+        "Complex case resolution",
+        "Inter-agency coordination",
+        "Data analysis & reporting",
+        "Mentoring & leadership",
+        "All of the above",
+    ],
+)
+responses["advanced_skill_choice"] = _adv_choice
+responses.update({f"advanced_rank_{k}": v for k, v in _adv_ranks.items()})
+responses["advanced_responsibilities"] = st.text_input("2. For those who've completed VDH and FDR II, what advanced responsibilities are you looking for them to handle?")
+responses["advanced_focus"] = st.text_area("3. Any other suggestions or focus areas for these advanced levels?")
+responses["advanced_comments"] = st.text_area("Additional comments on Advanced training")
 
 # --- Onboarding Questions ---
 st.header("Onboarding Process")
-onboard_desc = st.text_area("Describe how a new hire is onboarded in your CSC  from Day 1 until their first class.")
-onboard_support = st.radio("Are they assigned a dedicated coach/senior/work leader for new hires?", ["Yes", "No"])
-onboard_support_desc = st.text_area("If yes, describe how they support new hires.")
+responses["onboard_desc"] = st.text_area("Describe how a new hire is onboarded in your CSC  from Day 1 until their first class.")
+responses["onboard_support"] = st.radio("Are they assigned a dedicated coach/senior/work leader for new hires?", ["Yes", "No"])
+responses["onboard_support_desc"] = st.text_area("If yes, describe how they support new hires.")
 
-# --- Research/AI Feedback ---
+# --- Feedback on Survey Experience ---
 st.header("Feedback on Survey Experience")
-ai_feedback = st.slider("How did you like the hybrid AI guided survey structure?", min_value=1, max_value=5, value=5, step=1)
+responses["ai_feedback"] = st.slider("How did you like the hybrid AI guided survey structure?", min_value=1, max_value=5, value=5, step=1)
 st.write("👉 5 = Loved it | 1 = Didn't like at all")
-ai_comments = st.text_area("Comments on the AI survey experience")
-recommend = st.radio("Would you recommend this survey app for colleagues/departments?", ["Yes", "No", "Maybe"])
-recommend_comments = st.text_area("Why or why not?")
+responses["ai_comments"] = st.text_area("Comments on the AI survey experience")
+responses["recommend"] = st.radio("Would you recommend this survey app for colleagues/departments?", ["Yes", "No", "Maybe"])
+responses["recommend_comments"] = st.text_area("Why or why not?")
 
 # --- Submission ---
 if st.button("Submit Survey"):
-    st.success("✅ Your responses have been submitted! 🎉")
-    st.balloons()
+    # Timestamped copy for persistence
+    responses_copy = {**responses, "submitted_at": datetime.now().isoformat(timespec="seconds")}
+
+    # Persist to Excel via helper (one-row per submission)
+    try:
+        export_to_excel(responses_copy)
+        excel_ok = True
+    except Exception as e:
+        excel_ok = False
+        st.error(f"Excel export failed: {e}")
+
+    # Persist to CSV (append; create headers if file doesn't exist)
+    try:
+        csv_path = "survey_data.csv"
+        df = pd.DataFrame([responses_copy])
+        df.to_csv(csv_path, mode="a", header=not os.path.exists(csv_path), index=False, encoding="utf-8")
+        csv_ok = True
+    except Exception as e:
+        csv_ok = False
+        st.error(f"CSV save failed: {e}")
+
+    if excel_ok or csv_ok:
+        st.success("✅ Your responses have been submitted and saved! 🎉")
+        st.balloons()
+    else:
+        st.warning("Your response was received but could not be saved. Please try again or contact support.")
