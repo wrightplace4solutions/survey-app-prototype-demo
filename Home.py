@@ -1,3 +1,9 @@
+"""DMV Training Feedback Survey Application.
+
+This Streamlit application collects feedback on DMV training programs
+including Title Class, FDR1 & DLID, Driver Examiners, Compliance, and Advanced training.
+"""
+
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -9,7 +15,10 @@ st.set_page_config(page_title="Training Feedback Survey", layout="wide")
 
 # Company Branding - Updated with all questions and CSC locations
 # st.image("assets/company_logo.png", width=120)  # Add your company logo here
-st.markdown("<h3 style='text-align: center; color: #8B2635;'>Excellence Through Training</h3>", unsafe_allow_html=True)
+st.markdown(
+    "<h3 style='text-align: center; color: #8B2635;'>Excellence Through Training</h3>",
+    unsafe_allow_html=True
+)
 
 # Set the color scheme using a bit of custom styling
 st.markdown(
