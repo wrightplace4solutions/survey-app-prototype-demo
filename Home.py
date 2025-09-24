@@ -20,7 +20,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Set the color scheme using a bit of custom styling
+# Set the color scheme using safer custom styling
 st.markdown(
     """
     <style>
