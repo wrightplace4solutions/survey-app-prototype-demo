@@ -2,43 +2,45 @@ import os
 import pandas as pd
 import smtplib
 from email.mime.text import MIMEText
-from openpyxl import load_workbook
+from typing import Dict, List, Any
 
-def export_to_excel(data, filename="survey_results.xlsx", sheet_name="responses"):
+def export_to_excel(
+    data: Dict[str, Any],
+    filename: str = "survey_results.xlsx",
+    sheet_name: str = "responses",
+) -> str:
+    """Append a single submission (dict) to an Excel file.
+
+    This implementation avoids direct openpyxl workbook access ("writer.book") to
+    keep type checkers happy and remains robust:
+    - If the file/sheet exists, it reads existing rows and concatenates a new row.
+    - Otherwise, it creates a new file/sheet with headers.
     """
-    Append a single submission (dict) to an Excel file.
-    - Creates the file/sheet with headers on first run.
-    - Appends subsequent rows on later runs.
-    """
-    df = pd.DataFrame([data])
+    new_df = pd.DataFrame([data])
 
     if os.path.exists(filename):
-        # Append to existing workbook/sheet
-        with pd.ExcelWriter(
-            filename, engine="openpyxl", mode="a", if_sheet_exists="overlay"
-        ) as writer:
-            book = writer.book
-            if sheet_name in book.sheetnames:
-                ws = book[sheet_name]
-                startrow = ws.max_row
-            else:
-                # New sheet in existing workbook
-                startrow = 0
-            df.to_excel(
-                writer,
-                sheet_name=sheet_name,
-                index=False,
-                header=(startrow == 0),
-                startrow=startrow,
+        try:
+            existing = pd.read_excel(  # type: ignore[reportUnknownMemberType]
+                filename, sheet_name=sheet_name, engine="openpyxl"
             )
+            out_df = pd.concat([existing, new_df], ignore_index=True)
+        except ValueError:
+            # Sheet doesn't exist yet – just use the new row
+            out_df = new_df
     else:
-        # Create new workbook with the sheet and headers
-        with pd.ExcelWriter(filename, engine="openpyxl") as writer:
-            df.to_excel(writer, sheet_name=sheet_name, index=False)
+        out_df = new_df
+
+    # Always overwrite with the combined frame – simpler and reliable
+    out_df.to_excel(  # type: ignore[reportUnknownMemberType]
+        filename,
+        sheet_name=sheet_name,
+        index=False,
+        engine="openpyxl",
+    )
 
     return filename
 
-def send_email(subject, body, to_emails):
+def send_email(subject: str, body: str, to_emails: List[str]) -> None:
     msg = MIMEText(body)
     msg["Subject"] = subject
     msg["From"] = "noreply@training-survey-app.com"
@@ -47,5 +49,5 @@ def send_email(subject, body, to_emails):
     try:
         with smtplib.SMTP("localhost") as server:
             server.send_message(msg)
-    except Exception as e:
+    except (smtplib.SMTPException, ConnectionError, OSError) as e:
         print("Email send failed:", e)
