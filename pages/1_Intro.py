@@ -87,7 +87,7 @@ except Exception:
 st.markdown("---")
 st.markdown('<div class="demographics-form">', unsafe_allow_html=True)
 st.header("📝 Demographics (Required)")
-st.markdown('<p class="required-field">Please complete all required fields before proceeding to the survey.</p>', unsafe_allow_html=True)
+st.markdown('<p class="required-field">Please complete the required fields below before proceeding to the survey.</p>', unsafe_allow_html=True)
 
 # Initialize session state for demographics
 if 'demographics_completed' not in st.session_state:
@@ -100,8 +100,8 @@ with st.form("demographics_form"):
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("**Name** (Required)")
-        name = st.text_input("Enter your full name", value=st.session_state.get('user_name', ''), label_visibility="collapsed", placeholder="Your Name")
+        st.markdown("**Name** (Optional)")
+        name = st.text_input("Enter your full name", value=st.session_state.get('user_name', ''), label_visibility="collapsed", placeholder="Your Name (Optional)")
         
         st.markdown("**Role/Title** (Required)")
         role = st.text_input("Enter your role or job title", value=st.session_state.get('user_role', ''), label_visibility="collapsed", placeholder="Your Role/Title")
@@ -172,16 +172,14 @@ with st.form("demographics_form"):
     submitted = st.form_submit_button("💾 Save Demographics & Continue", type="primary", use_container_width=True)
     
     if submitted:
-        # Validation
-        if not name.strip():
-            st.error("❌ Please enter your name!")
-        elif not role.strip():
+        # Validation - Name is now optional, but CSC is required
+        if not role.strip():
             st.error("❌ Please enter your role/title!")
         elif not csc or csc == "":
             st.error("❌ Please select your CSC location from the dropdown!")
         else:
-            # Save to session state
-            st.session_state.user_name = name.strip()
+            # Save to session state - use "Anonymous" if no name provided
+            st.session_state.user_name = name.strip() if name.strip() else "Anonymous"
             st.session_state.user_role = role.strip() 
             st.session_state.user_csc = csc
             st.session_state.user_email = email.strip()
@@ -208,6 +206,6 @@ if st.session_state.get('demographics_completed', False):
     st.markdown("👈 **Next Step:** Use the sidebar to navigate to the **Survey** page to begin!")
 else:
     st.warning("⚠️ Please complete the demographics section above before accessing the survey.")
-    st.info("💡 **Tip:** All fields with * are required. Make sure to select your CSC from the dropdown menu.")
+    st.info("💡 **Tip:** Role/Title and CSC selection are required. Name and Email are optional.")
 
 st.markdown('</div>', unsafe_allow_html=True)
