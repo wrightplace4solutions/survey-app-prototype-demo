@@ -79,4 +79,3 @@ def send_email(subject: str, body: str, to_emails: List[str]) -> None:
             server.send_message(msg)
     except (smtplib.SMTPException, ConnectionError, OSError) as e:
         print("Email send failed:", e)
-
