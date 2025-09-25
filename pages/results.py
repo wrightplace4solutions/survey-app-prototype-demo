@@ -1,15 +1,17 @@
+# pyright: reportUnknownMemberType=false
+# pyright: reportUnknownVariableType=false
+# pyright: reportUnknownArgumentType=false
 """Results dashboard for the training survey.
 
 Provides filters, visualizations, and CSV export for collected responses.
 
 This file uses Streamlit, Altair, and Pandas which don't ship full
-type stubs in some environments. Relax unknown-type diagnostics:
-# pyright: reportUnknownMemberType=false, reportUnknownVariableType=false,
-# pyright: reportUnknownArgumentType=false
+type stubs in some environments.
 """
 
 import os
 from datetime import date as _date
+from typing import cast
 
 import altair as alt
 import pandas as pd
@@ -48,7 +50,7 @@ def render_results_dashboard() -> None:
         st.stop()
 
     # Load
-    df = pd.read_csv(DATA_FILE)
+    df: pd.DataFrame = pd.read_csv(DATA_FILE)
 
     # Basic hygiene
     if "submitted_at" in df.columns:
@@ -70,8 +72,12 @@ def render_results_dashboard() -> None:
     end_date: _date | None = None
     if pd.notna(date_min) and pd.notna(date_max):
         # Use two date inputs to avoid ambiguous return types
-        start_date = st.sidebar.date_input("Start date", date_min.date())
-        end_date = st.sidebar.date_input("End date", date_max.date())
+        start_date = cast(
+            _date, st.sidebar.date_input("Start date", date_min.date())
+        )
+        end_date = cast(
+            _date, st.sidebar.date_input("End date", date_max.date())
+        )
 
     # Apply filters
     mask = pd.Series([True] * len(df))
