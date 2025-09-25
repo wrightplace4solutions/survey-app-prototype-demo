@@ -1,4 +1,5 @@
 """Intro/landing page visuals and instructions for the survey app."""
+# pylint: disable=invalid-name
 
 import streamlit as st
 

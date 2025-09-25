@@ -1,6 +1,7 @@
 # pyright: reportUnknownMemberType=false
 # pyright: reportUnknownVariableType=false
 # pyright: reportUnknownArgumentType=false
+# pylint: disable=invalid-name
 """Results dashboard for the training survey.
 
 Provides filters, visualizations, and CSV export for collected responses.
@@ -23,8 +24,6 @@ DATA_FILE = "survey_data.csv"
 
 def render_results_dashboard() -> None:
     """Render the results dashboard with filters, charts and exports."""
-
-    st.set_page_config(page_title="Training Survey Results", layout="wide")
 
     # Sidebar / Title
     st.sidebar.title("Results")
