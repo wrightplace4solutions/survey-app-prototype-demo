@@ -1,3 +1,5 @@
+"""Intro/landing page visuals and instructions for the survey app."""
+
 import streamlit as st
 
 # Set consistent styling with main app
