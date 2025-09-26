@@ -428,8 +428,8 @@ st.write("Please review your responses above before submitting.")
 col1, col2, col3 = st.columns([1,2,1])
 with col2:
     if st.button("🚀 Submit Survey", type="primary", use_container_width=True):
-        # Validate required fields - name is optional, but role and csc are required
-        if not all([responses["role"], responses["csc"]]):
-            st.error("Please ensure Role/Title and CSC are filled in the demographics!")
+        # Validate required fields - only CSC is required now
+        if not responses["csc"]:
+            st.error("Please ensure CSC location is selected in the demographics!")
         else:
             _handle_submission(responses)

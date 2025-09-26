@@ -55,17 +55,42 @@ st.markdown(
             background-color: white !important;
             color: #2F1B14 !important;
         }
+        /* Fix message box text visibility */
+        .stAlert {
+            color: #2F1B14 !important;
+        }
+        .stAlert > div {
+            color: #2F1B14 !important;
+        }
+        .stSuccess {
+            background-color: #d4edda !important;
+            color: #155724 !important;
+        }
+        .stWarning {
+            background-color: #fff3cd !important;
+            color: #856404 !important;
+        }
+        .stInfo {
+            background-color: #d1ecf1 !important;
+            color: #0c5460 !important;
+        }
+        .stError {
+            background-color: #f8d7da !important;
+            color: #721c24 !important;
+        }
     </style>
     """, unsafe_allow_html=True
 )
 
 st.title("Welcome to the Training Feedback Survey")
 
-# Placeholder for avatar video embed
-try:
-    st.video("assets/avatar_intro.mp4")
-except Exception:
-    st.info("Introduction video not available - you can still proceed with the survey!")
+# Only show video section if file exists
+import os
+if os.path.exists("assets/avatar_intro.mp4"):
+    try:
+        st.video("assets/avatar_intro.mp4")
+    except Exception:
+        pass  # Don't show anything if video fails to load
 
 st.write("""
 ### Instructions
@@ -77,17 +102,18 @@ st.write("""
 👉 Scan the QR code below or go to survey.soulwaresystems.com
 """)
 
-# Try to display QR image, handle gracefully if not found
-try:
-    st.image("assets/survey_qr.png", width=200)
-except Exception:
-    st.info("QR code image not available - you can still proceed with the survey!")
+# Only show QR code if file exists
+if os.path.exists("assets/survey_qr.png"):
+    try:
+        st.image("assets/survey_qr.png", width=200)
+    except Exception:
+        pass  # Don't show anything if image fails to load
 
 # Demographics Section - Required before accessing survey
 st.markdown("---")
 st.markdown('<div class="demographics-form">', unsafe_allow_html=True)
-st.header("📝 Demographics (Required)")
-st.markdown('<p class="required-field">Please complete the required fields below before proceeding to the survey.</p>', unsafe_allow_html=True)
+st.header("📝 Demographics")
+st.markdown('<p class="required-field">Please select your CSC location below to proceed to the survey.</p>', unsafe_allow_html=True)
 
 # Initialize session state for demographics
 if 'demographics_completed' not in st.session_state:
@@ -103,8 +129,8 @@ with st.form("demographics_form"):
         st.markdown("**Name** (Optional)")
         name = st.text_input("Enter your full name", value=st.session_state.get('user_name', ''), label_visibility="collapsed", placeholder="Your Name (Optional)")
         
-        st.markdown("**Role/Title** (Required)")
-        role = st.text_input("Enter your role or job title", value=st.session_state.get('user_role', ''), label_visibility="collapsed", placeholder="Your Role/Title")
+        st.markdown("**Role/Title** (Optional)")
+        role = st.text_input("Enter your role or job title", value=st.session_state.get('user_role', ''), label_visibility="collapsed", placeholder="Your Role/Title (Optional)")
     
     with col2:
         st.markdown("**CSC Location** (Required)")
@@ -172,15 +198,13 @@ with st.form("demographics_form"):
     submitted = st.form_submit_button("💾 Save Demographics & Continue", type="primary", use_container_width=True)
     
     if submitted:
-        # Validation - Name is now optional, but CSC is required
-        if not role.strip():
-            st.error("❌ Please enter your role/title!")
-        elif not csc or csc == "":
+        # Validation - Only CSC is required now
+        if not csc or csc == "":
             st.error("❌ Please select your CSC location from the dropdown!")
         else:
-            # Save to session state - use "Anonymous" if no name provided
+            # Save to session state - use defaults if fields not provided
             st.session_state.user_name = name.strip() if name.strip() else "Anonymous"
-            st.session_state.user_role = role.strip() 
+            st.session_state.user_role = role.strip() if role.strip() else "Not Specified"
             st.session_state.user_csc = csc
             st.session_state.user_email = email.strip()
             st.session_state.demographics_completed = True
@@ -205,7 +229,7 @@ if st.session_state.get('demographics_completed', False):
         
     st.markdown("👈 **Next Step:** Use the sidebar to navigate to the **Survey** page to begin!")
 else:
-    st.warning("⚠️ Please complete the demographics section above before accessing the survey.")
-    st.info("💡 **Tip:** Role/Title and CSC selection are required. Name and Email are optional.")
+    st.warning("⚠️ Please select your CSC location above before accessing the survey.")
+    st.info("💡 **Tip:** Only CSC selection is required. Name, Role/Title and Email are optional.")
 
 st.markdown('</div>', unsafe_allow_html=True)
