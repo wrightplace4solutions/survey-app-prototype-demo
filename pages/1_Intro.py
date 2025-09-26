@@ -19,6 +19,15 @@ st.markdown(
         .stTextInput > div > div > input,
         .stSelectbox > div > div,
         .stTextArea > div > div > textarea { background:#fff !important; color:#2F1B14 !important; }
+        
+        /* Fix warning box text visibility */
+        .stAlert > div { color:#2F1B14 !important; }
+        .stWarning > div { color:#2F1B14 !important; font-weight:600; }
+        .stSuccess > div { color:#2F1B14 !important; font-weight:600; }
+        
+        /* QR Code section styling */
+        .qr-section { text-align: center; margin: 20px 0; }
+        .qr-text { color:#8B2635; font-weight:600; }
     </style>
     """,
     unsafe_allow_html=True
@@ -53,7 +62,13 @@ st.write("""
 
 # Optional QR (kept for convenience)
 if os.path.exists("assets/survey_qr.png"):
-    st.image("assets/survey_qr.png", width=180, caption="scan: https://survey.soulwaresystems.com")
+    st.markdown('<div class="qr-section">', unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.markdown('<p class="qr-text">👆 Scan QR Code Above</p>', unsafe_allow_html=True)
+        st.image("assets/survey_qr.png", width=280)
+        st.markdown('<p class="qr-text"><strong>or visit:</strong> https://survey.soulwaresystems.com</p>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ----- Demographics (CSC required) -----
 st.markdown("---")
