@@ -125,7 +125,7 @@ def render_results_dashboard() -> None:
             cornerRadiusTopRight=3
         ).encode(
             x=alt.X("CSC:N", sort="-y", title="Customer Service Center"),
-            y=alt.Y("Responses:Q", title="Number of Responses"),
+            y=alt.Y("Responses:Q", title="Number of Responses", axis=alt.Axis(tickMinStep=0.5)),
             tooltip=["CSC", "Responses"],
         ).properties(
             height=400,
@@ -152,7 +152,7 @@ def render_results_dashboard() -> None:
             cornerRadiusTopRight=3
         ).encode(
             y=alt.Y("Question:N", sort="-x", title="Training Area"),
-            x=alt.X("Average:Q", title="Average Rating", scale=alt.Scale(domain=[0, 5])),
+            x=alt.X("Average:Q", title="Average Rating", scale=alt.Scale(domain=[0, 5]), axis=alt.Axis(tickMinStep=0.5)),
             tooltip=["Question", alt.Tooltip("Average:Q", format=".2f")],
         ).properties(
             height=max(300, len(avgs) * 50),
@@ -192,7 +192,7 @@ def render_results_dashboard() -> None:
                         cornerRadiusTopRight=3
                     ).encode(
                         y=alt.Y("Option:N", sort="-x", title="Skill/Topic"),
-                        x=alt.X("Count:Q", title="Number of Responses"),
+                        x=alt.X("Count:Q", title="Number of Responses", axis=alt.Axis(tickMinStep=0.5)),
                         tooltip=["Option", "Count"],
                     ).properties(
                         height=max(200, len(counts) * 30),
