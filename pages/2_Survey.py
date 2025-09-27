@@ -1,8 +1,8 @@
 """
 Training Feedback Survey Page
 
-Collects survey responses for Title Class, FDR1 & DLID, Driver Examiners,
-Compliance, and Advanced training. Saves results to the master CSV + Excel.
+Collects survey responses for Title Class, FDRI/DLID, Driver examiners,
+Compliance, and Advanced VDH FDRII training. Saves results to the master CSV + Excel.
 """
 
 import os
@@ -70,7 +70,7 @@ SECTION_SKILLS = {
         "Data privacy & confidentiality",
         "All of the above",
     ],
-    "Advanced_VDH and FDR_II_Skills_Important": [
+    "Advanced_VDH_FDR_II_Skills_Important": [
         "Complex case resolution",
         "Document verification",
         "Data analysis & reporting",

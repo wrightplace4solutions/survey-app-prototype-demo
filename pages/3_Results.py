@@ -140,8 +140,11 @@ def render_results_dashboard() -> None:
         avgs = fdf[rating_cols].mean(numeric_only=True).reset_index()
         avgs.columns = ["Question", "Average"]
         # Clean up column names for better display
-        avgs["Question"] = avgs["Question"].str.replace("_", " ").str.title()
-        avgs = avgs.sort_values("Average", ascending=False)
+        avgs["Question"] = avgs["Question"].str.replace("_", " ").str.replace("Ai ", "AI ").str.replace("Fdr1 And Dlid", "FDRI/DLID").str.replace("Title Class", "Title Class").str.replace("Driver Examiner", "Driver examiner").str.replace("Advanced Vdh Fdr Ii Fdr Iii", "Advanced VDH FDRII")
+        # Custom sort order with Title Class first
+        sort_order = {"Title Class Confidence": 0, "FDRI/DLID Confidence": 1, "Driver examiner Confidence": 2, "Compliance Confidence": 3, "Advanced VDH FDRII Confidence": 4, "AI Survey Experience Rating": 5}
+        avgs["sort_key"] = avgs["Question"].map(sort_order).fillna(999)
+        avgs = avgs.sort_values("sort_key").drop("sort_key", axis=1)
         
         chart = alt.Chart(avgs).mark_bar(
             color='#2F1B14',
@@ -159,11 +162,11 @@ def render_results_dashboard() -> None:
 
     # Skills Breakdown with improved layout
     section_skill_cols = {
-        "🎯 Title": "Title_Class_Skills_Important",
-        "🚗 FDR1/DLID": "FDR1_and_DLID_Skills_Important",
-        "👨‍💼 Driver Examiner": "Driver_Examiner_Skills_Important",
+        "🎯 Title Class": "Title_Class_Skills_Important",
+        "🚗 FDRI/DLID": "FDR1_and_DLID_Skills_Important",
+        "👨‍💼 Driver examiner": "Driver_Examiner_Skills_Important",
         "✅ Compliance": "Compliance_Skills_Important",
-        "🚀 Advanced": "Advanced_VDH_FDR_II_FDR_III_Skills_Important",
+        "🚀 Advanced VDH FDRII": "Advanced_VDH_FDR_II_FDR_III_Skills_Important",
     }
     
     skills_data_exists = False
