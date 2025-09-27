@@ -78,7 +78,7 @@ if os.path.exists("assets/survey_qr.png"):
     st.markdown('<div class="qr-section">', unsafe_allow_html=True)
     st.image("assets/survey_qr.png", width=280)
     st.markdown('<p class="qr-text">👆 Scan QR Code</p>', unsafe_allow_html=True)
-    st.markdown('<p class="qr-text"><strong>or visit:</strong> <a href="https://survey.soulwaresystems.com" target="_blank" class="qr-link">https://survey.soulwaresystems.com</a></p>', unsafe_allow_html=True)
+    st.markdown('<p class="qr-text"><strong>or visit:</strong> https://survey.soulwaresystems.com</p>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ----- Demographics (CSC required) -----
