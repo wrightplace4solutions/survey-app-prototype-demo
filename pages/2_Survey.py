@@ -132,12 +132,29 @@ onboarding_desc = st.text_area(
     "1. Describe how a new hire is onboarded in your CSC."
 )
 onboarding_coach = st.radio(
-    "2. Are they assigned a dedicated coach/senior/work leader for new hires?",
+    "2. Are they assigned a dedicated coach/senior/work leader for shadowing, coaching and development?",
     ["Yes", "No"],
 )
 onboarding_support = ""
 if onboarding_coach == "Yes":
     onboarding_support = st.text_area("If yes: Please describe how they support new hires.")
+
+# New questions about e-Learning and OJT
+elearning_time = st.radio(
+    "3. Are new hires provided adequate dedicated time to complete their required e-Learning modules?",
+    ["Yes", "No", "Sometimes"],
+)
+elearning_details = ""
+if elearning_time in ["No", "Sometimes"]:
+    elearning_details = st.text_area("If no or sometimes: Please explain the challenges or barriers.")
+
+ojt_assessment = st.radio(
+    "4. Do new hires successfully complete and pass their Basic Skills OJT guide assessment before being scheduled for Title class?",
+    ["Always", "Usually", "Sometimes", "Rarely", "Never"],
+)
+ojt_details = ""
+if ojt_assessment in ["Sometimes", "Rarely", "Never"]:
+    ojt_details = st.text_area("If not consistently: What factors prevent successful completion?")
 
 # ---------------- Survey Experience ----------------
 st.header("Feedback on Survey Experience")
@@ -163,6 +180,10 @@ if st.button("Submit Survey"):
         "Onboarding_Process_Description": onboarding_desc,
         "Onboarding_Assigned_Coach": onboarding_coach,
         "Onboarding_Coach_Support": onboarding_support,
+        "ELearning_Dedicated_Time": elearning_time,
+        "ELearning_Time_Details": elearning_details,
+        "OJT_Assessment_Success": ojt_assessment,
+        "OJT_Assessment_Details": ojt_details,
         "AI_Survey_Experience_Rating": ai_rating,
         "AI_Survey_Experience_Comments": ai_comments,
         "Recommend_Survey_App": recommend,
