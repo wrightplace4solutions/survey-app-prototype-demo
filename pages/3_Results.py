@@ -52,25 +52,24 @@ def render_results_dashboard() -> None:
     df: pd.DataFrame = pd.read_csv(DATA_FILE)
 
     # Basic hygiene
-    if "submitted_at" in df.columns:
-        df["submitted_at"] = pd.to_datetime(df["submitted_at"], errors="coerce")
+    if "Timestamp" in df.columns:
+        df["Timestamp"] = pd.to_datetime(df["Timestamp"], errors="coerce")
 
     # Sidebar Filters
     st.sidebar.header("Filters")
     cscs = sorted(
-        [c for c in df.get("csc", pd.Series([])).dropna().unique().tolist()]
+        [c for c in df.get("CSC", pd.Series([])).dropna().unique().tolist()]
     )
     default_cscs = cscs if cscs else []
     csc_filter = st.sidebar.multiselect(
         "CSC(s)", options=default_cscs, default=default_cscs
     )
 
-    date_min = df.get("submitted_at", pd.Series([pd.NaT])).min()
-    date_max = df.get("submitted_at", pd.Series([pd.NaT])).max()
+    date_min = df.get("Timestamp", pd.Series([pd.NaT])).min()
+    date_max = df.get("Timestamp", pd.Series([pd.NaT])).max()
     start_date: _date | None = None
     end_date: _date | None = None
     if pd.notna(date_min) and pd.notna(date_max):
-        # Use two date inputs to avoid ambiguous return types
         start_date = cast(
             _date, st.sidebar.date_input("Start date", date_min.date())
         )
@@ -81,13 +80,12 @@ def render_results_dashboard() -> None:
     # Apply filters
     mask = pd.Series([True] * len(df))
     if csc_filter:
-        mask &= df["csc"].isin(csc_filter)
-    if start_date and end_date and "submitted_at" in df.columns:
-        # include whole day range (end is inclusive)
+        mask &= df["CSC"].isin(csc_filter)
+    if start_date and end_date and "Timestamp" in df.columns:
         day_mask = (
-            df["submitted_at"] >= pd.Timestamp(start_date)
+            df["Timestamp"] >= pd.Timestamp(start_date)
         ) & (
-            df["submitted_at"] < pd.Timestamp(end_date) + pd.Timedelta(days=1)
+            df["Timestamp"] < pd.Timestamp(end_date) + pd.Timedelta(days=1)
         )
         mask &= day_mask
 
@@ -98,13 +96,13 @@ def render_results_dashboard() -> None:
     with left:
         st.metric("Total responses", int(len(fdf)))
     with right:
-        if "csc" in fdf.columns:
-            st.metric("Unique CSCs", int(fdf["csc"].nunique()))
+        if "CSC" in fdf.columns:
+            st.metric("Unique CSCs", int(fdf["CSC"].nunique()))
 
     # CSC distribution
-    if "csc" in fdf.columns and not fdf["csc"].dropna().empty:
+    if "CSC" in fdf.columns and not fdf["CSC"].dropna().empty:
         st.subheader("Responses by CSC")
-        csc_counts = fdf["csc"].value_counts().reset_index()
+        csc_counts = fdf["CSC"].value_counts().reset_index()
         csc_counts.columns = ["CSC", "Responses"]
         chart = alt.Chart(csc_counts).mark_bar().encode(
             x=alt.X("CSC:N", sort="-y"),
@@ -113,9 +111,9 @@ def render_results_dashboard() -> None:
         )
         st.altair_chart(chart, use_container_width=True)
 
-    # Average ratings (columns that end with _overall or are sliders)
+    # Average ratings (confidence + AI survey feedback)
     rating_cols = [
-        c for c in fdf.columns if c.endswith("_overall") or c in ["ai_feedback"]
+        c for c in fdf.columns if "Confidence" in c or c == "AI_Survey_Experience_Rating"
     ]
     if rating_cols:
         st.subheader("Average Ratings")
@@ -128,13 +126,13 @@ def render_results_dashboard() -> None:
         )
         st.altair_chart(chart, use_container_width=True)
 
-    # Skill choice counts per section
+    # Skill choice counts per section (mapped to new Excel headers)
     section_skill_cols = {
-        "Title": "title_skill_choice",
-        "FDR1/DLID": "fdr_skill_choice",
-        "Driver Examiner": "de_skill_choice",
-        "Compliance": "compliance_skill_choice",
-        "Advanced": "advanced_skill_choice",
+        "Title": "Title_Class_Skills_Important",
+        "FDR1/DLID": "FDR1_and_DLID_Skills_Important",
+        "Driver Examiner": "Driver_Examiner_Skills_Important",
+        "Compliance": "Compliance_Skills_Important",
+        "Advanced": "Advanced_VDH_FDR_II_FDR_III_Skills_Important",
     }
     for section, col in section_skill_cols.items():
         if col in fdf.columns and not fdf[col].dropna().empty:
