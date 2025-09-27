@@ -27,18 +27,17 @@ st.markdown(
 )
 
 # Check demographics
-if "demographics" not in st.session_state:
+if not st.session_state.get("demographics_completed"):
     st.warning("⚠️ No demographics found. Please complete the Intro page first.")
     st.stop()
 
 # Show demographics at the top
 st.header("Demographics")
-demo = st.session_state["demographics"]
 st.info(
-    f"**Name:** {demo.get('User_Name', '')}\n\n"
-    f"**Role/Title:** {demo.get('User_Role', '')}\n\n"
-    f"**CSC:** {demo.get('CSC', '')}\n\n"
-    f"**Email:** {demo.get('User_Email', '')}"
+    f"**Name:** {st.session_state.get('user_name', '')}\n\n"
+    f"**Role/Title:** {st.session_state.get('user_role', '')}\n\n"
+    f"**CSC:** {st.session_state.get('user_csc', '')}\n\n"
+    f"**Email:** {st.session_state.get('user_email', '')}"
 )
 
 # --- Skills options for each section ---
@@ -150,10 +149,15 @@ recommend_why = st.text_area("4. Why or why not?")
 # ---------------- Submit ----------------
 if st.button("Submit Survey"):
     record = {
-        "SubmissionID": f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{demo.get('User_Name', '')}",
+        "SubmissionID": f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{st.session_state.get('user_name', '')}",
         "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     }
-    record.update(demo)
+    record.update({
+        "User_Name": st.session_state.get('user_name', ''),
+        "User_Role": st.session_state.get('user_role', ''),
+        "CSC": st.session_state.get('user_csc', ''),
+        "User_Email": st.session_state.get('user_email', '')
+    })
     record.update(responses)
     record.update({
         "Onboarding_Process_Description": onboarding_desc,
