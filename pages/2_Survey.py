@@ -70,7 +70,7 @@ SECTION_SKILLS = {
         "Data privacy & confidentiality",
         "All of the above",
     ],
-    "Advanced_VDH_FDR_II_FDR_III_Skills_Important": [
+    "Advanced_VDH and FDR_II_Skills_Important": [
         "Complex case resolution",
         "Document verification",
         "Data analysis & reporting",
