@@ -27,29 +27,71 @@ st.markdown(
             min-height: 100vh;
         }
         
-        /* Header styling with professional gradient */
+        /* Header styling with granulated glowing effect */
         .main-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
             padding: 2rem;
             border-radius: 15px;
             text-align: center;
             margin-bottom: 2rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 
+                0 0 20px rgba(102, 126, 234, 0.4),
+                0 0 40px rgba(118, 75, 162, 0.3),
+                0 0 60px rgba(102, 126, 234, 0.2),
+                0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 8s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .main-header h1 {
             color: white;
             margin: 0;
             font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 
+                0 0 10px rgba(255,255,255,0.5),
+                0 0 20px rgba(255,255,255,0.3),
+                0 0 30px rgba(102, 126, 234, 0.4),
+                2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
         }
         
         .main-header h3 {
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.95);
             margin: 10px 0 0 0;
             font-weight: 300;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            text-shadow: 
+                0 0 8px rgba(255,255,255,0.3),
+                0 0 15px rgba(118, 75, 162, 0.3),
+                1px 1px 2px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 2;
         }
         
         /* Section containers with colorful backgrounds */
@@ -120,6 +162,23 @@ st.markdown(
         .stButton > button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* Custom warning alert styling */
+        .stAlert > div {
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .stAlert[data-baseweb="notification"] {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%) !important;
+            border-left: 4px solid #5c6bc0 !important;
+            color: #37474f !important;
+        }
+        
+        .stAlert[data-baseweb="notification"] > div {
+            background: transparent !important;
+            color: #37474f !important;
         }
     </style>
     """,
