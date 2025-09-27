@@ -1,15 +1,3 @@
-# pyright: reportUnknownMemberType=false
-# pyright: reportUnknownVariableType=false
-# pyright: reportUnknownArgumentType=false
-# pylint: disable=invalid-name
-"""Results dashboard for the training survey.
-
-Provides filters, visualizations, and CSV export for collected responses.
-
-This file uses Streamlit, Altair, and Pandas which don't ship full
-type stubs in some environments.
-"""
-
 import os
 from datetime import date as _date
 from typing import cast
@@ -18,79 +6,51 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-
-DATA_FILE = "survey_data.csv"
+DATA_FILE = "Updated_Training_Feedback_Survey_Template.csv"
 
 
 def render_results_dashboard() -> None:
-    """Render the results dashboard with filters, charts and exports."""
-
-    # Sidebar / Title
-    st.sidebar.title("Results")
-    st.title("📊 Training Survey Results Dashboard")
-
-    # Styling (match app look & feel)
+    # Unified header
     st.markdown(
         """
-        <style>
-            body { color: #2F1B14; background-color: #FAF7F0; }
-            .stApp { color: #2F1B14; background-color: #FEFCF7; }
-            h1, h2, h3 { color: #8B2635; }
-        </style>
+        <h1 style='text-align: center; color: #2F1B14;'>Training Feedback Survey</h1>
+        <h3 style='text-align: center; color: #8B2635;'>Excellence Through Training</h3>
         """,
         unsafe_allow_html=True,
     )
 
     if not os.path.exists(DATA_FILE):
-        st.warning(
-            "No survey data available yet. "
-            "Submit at least one survey to view results."
-        )
+        st.warning("No survey data available yet. Submit at least one survey to view results.")
         st.stop()
 
-    # Load
     df: pd.DataFrame = pd.read_csv(DATA_FILE)
-
-    # Basic hygiene
     if "Timestamp" in df.columns:
         df["Timestamp"] = pd.to_datetime(df["Timestamp"], errors="coerce")
 
     # Sidebar Filters
     st.sidebar.header("Filters")
-    cscs = sorted(
-        [c for c in df.get("CSC", pd.Series([])).dropna().unique().tolist()]
-    )
-    default_cscs = cscs if cscs else []
-    csc_filter = st.sidebar.multiselect(
-        "CSC(s)", options=default_cscs, default=default_cscs
-    )
+    cscs = sorted(df.get("CSC", pd.Series([])).dropna().unique().tolist())
+    csc_filter = st.sidebar.multiselect("CSC(s)", options=cscs, default=cscs)
 
     date_min = df.get("Timestamp", pd.Series([pd.NaT])).min()
     date_max = df.get("Timestamp", pd.Series([pd.NaT])).max()
-    start_date: _date | None = None
-    end_date: _date | None = None
+    start_date, end_date = None, None
     if pd.notna(date_min) and pd.notna(date_max):
-        start_date = cast(
-            _date, st.sidebar.date_input("Start date", date_min.date())
-        )
-        end_date = cast(
-            _date, st.sidebar.date_input("End date", date_max.date())
-        )
+        start_date = cast(_date, st.sidebar.date_input("Start date", date_min.date()))
+        end_date = cast(_date, st.sidebar.date_input("End date", date_max.date()))
 
     # Apply filters
     mask = pd.Series([True] * len(df))
     if csc_filter:
         mask &= df["CSC"].isin(csc_filter)
     if start_date and end_date and "Timestamp" in df.columns:
-        day_mask = (
-            df["Timestamp"] >= pd.Timestamp(start_date)
-        ) & (
+        mask &= (df["Timestamp"] >= pd.Timestamp(start_date)) & (
             df["Timestamp"] < pd.Timestamp(end_date) + pd.Timedelta(days=1)
         )
-        mask &= day_mask
 
     fdf = df[mask].copy()
 
+    # Overview
     st.subheader("Overview")
     left, right = st.columns(2)
     with left:
@@ -111,10 +71,8 @@ def render_results_dashboard() -> None:
         )
         st.altair_chart(chart, use_container_width=True)
 
-    # Average ratings (confidence + AI survey feedback)
-    rating_cols = [
-        c for c in fdf.columns if "Confidence" in c or c == "AI_Survey_Experience_Rating"
-    ]
+    # Average Ratings
+    rating_cols = [c for c in fdf.columns if "Confidence" in c or c == "AI_Survey_Experience_Rating"]
     if rating_cols:
         st.subheader("Average Ratings")
         avgs = fdf[rating_cols].mean(numeric_only=True).reset_index()
@@ -126,7 +84,7 @@ def render_results_dashboard() -> None:
         )
         st.altair_chart(chart, use_container_width=True)
 
-    # Skill choice counts per section (mapped to new Excel headers)
+    # Skills Breakdown
     section_skill_cols = {
         "Title": "Title_Class_Skills_Important",
         "FDR1/DLID": "FDR1_and_DLID_Skills_Important",
@@ -146,11 +104,39 @@ def render_results_dashboard() -> None:
             )
             st.altair_chart(chart, use_container_width=True)
 
-    # Raw table (filtered)
+    # Audit Issues Breakdown
+    audit_cols = [c for c in fdf.columns if c.endswith("_Audit_Issues")]
+    if audit_cols:
+        st.subheader("Audit Issues Overview")
+        for col in audit_cols:
+            section_name = col.replace("_Audit_Issues", "").replace("_", " ")
+            st.markdown(f"**{section_name}**")
+
+            # Extract Yes/No
+            audit_split = fdf[col].fillna("").apply(lambda x: x.split(" - ")[0].strip())
+            counts = audit_split.value_counts().reset_index()
+            counts.columns = ["Response", "Count"]
+
+            chart = alt.Chart(counts).mark_bar().encode(
+                x=alt.X("Response:N", sort="-y"),
+                y="Count:Q",
+                tooltip=["Response", "Count"],
+            )
+            st.altair_chart(chart, use_container_width=True)
+
+            # Show common error details if any
+            if audit_split.eq("Yes").any():
+                st.write("Common Issues Reported:")
+                issues = fdf[col].dropna().apply(lambda x: x.split(" - ")[1] if " - " in x else "")
+                issues = issues[issues != ""]
+                if not issues.empty:
+                    st.dataframe(issues.reset_index(drop=True), use_container_width=True)
+
+    # Raw table
     st.subheader("Raw Responses (filtered)")
     st.dataframe(fdf, use_container_width=True)
 
-    # Export buttons
+    # Export
     st.subheader("Export")
     st.download_button(
         label="Download filtered CSV",
@@ -158,7 +144,13 @@ def render_results_dashboard() -> None:
         file_name="filtered_results.csv",
         mime="text/csv",
     )
+    st.download_button(
+        label="Download filtered Excel",
+        data=fdf.to_excel(index=False, engine="openpyxl"),
+        file_name="filtered_results.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
 
 
-# Execute immediately when imported/run by Streamlit
-render_results_dashboard()
+if __name__ == "__main__":
+    render_results_dashboard()
