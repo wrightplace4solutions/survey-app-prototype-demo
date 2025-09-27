@@ -17,11 +17,122 @@ EXCEL_FILE = "Updated_Training_Feedback_Survey_Template.xlsx"
 # Page settings
 st.set_page_config(page_title="Training Feedback Survey", layout="wide")
 
-# Unified header
+# Enhanced styling for engaging yet professional background
 st.markdown(
     """
-    <h1 style='text-align: center; color: #2F1B14;'>Training Feedback Survey</h1>
-    <h3 style='text-align: center; color: #8B2635;'>Excellence Through Training</h3>
+    <style>
+        /* Main background with subtle gradient */
+        .stApp {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        /* Header styling with professional gradient */
+        .main-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .main-header h1 {
+            color: white;
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .main-header h3 {
+            color: rgba(255,255,255,0.9);
+            margin: 10px 0 0 0;
+            font-weight: 300;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        /* Section containers with colorful backgrounds */
+        .section-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .section-title {
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Demographics section with spring theme */
+        .demographics-container {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        /* Question containers with varied colors */
+        .question-container-1 {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            border-left: 4px solid #ff8a65;
+        }
+        
+        .question-container-2 {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            border-left: 4px solid #4db6ac;
+        }
+        
+        .question-container-3 {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            border-left: 4px solid #ba68c8;
+        }
+        
+        /* Submit button styling */
+        .stButton > button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-size: 1.1em;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .stButton > button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Enhanced header
+st.markdown(
+    """
+    <div class="main-header">
+        <h1>📊 Training Feedback Survey</h1>
+        <h3>Excellence Through Training - Your Voice Matters</h3>
+    </div>
     """,
     unsafe_allow_html=True,
 )
@@ -31,14 +142,21 @@ if not st.session_state.get("demographics_completed"):
     st.warning("⚠️ No demographics found. Please complete the Intro page first.")
     st.stop()
 
-# Show demographics at the top
-st.header("Demographics")
-st.info(
-    f"**Name:** {st.session_state.get('user_name', '')}\n\n"
-    f"**Role/Title:** {st.session_state.get('user_role', '')}\n\n"
-    f"**CSC:** {st.session_state.get('user_csc', '')}\n\n"
-    f"**Email:** {st.session_state.get('user_email', '')}"
+# Show demographics with enhanced styling
+st.markdown('<div class="demographics-container">', unsafe_allow_html=True)
+st.markdown("### 👤 Your Information")
+st.markdown(
+    f"""
+    <div style='background: rgba(255,255,255,0.7); padding: 1rem; border-radius: 8px; margin: 0.5rem 0;'>
+        <strong>📛 Name:</strong> {st.session_state.get('user_name', '')}<br>
+        <strong>👔 Role/Title:</strong> {st.session_state.get('user_role', '')}<br>
+        <strong>🏢 CSC:</strong> {st.session_state.get('user_csc', '')}<br>
+        <strong>📧 Email:</strong> {st.session_state.get('user_email', '')}
+    </div>
+    """,
+    unsafe_allow_html=True
 )
+st.markdown('</div>', unsafe_allow_html=True)
 
 # --- Skills options for each section ---
 SECTION_SKILLS = {
