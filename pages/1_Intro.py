@@ -26,8 +26,17 @@ st.markdown(
         .stSuccess > div { color:#2F1B14 !important; font-weight:600; }
         
         /* QR Code section styling */
-        .qr-section { text-align: center; margin: 20px 0; }
-        .qr-text { color:#8B2635; font-weight:600; }
+        .qr-section { 
+            text-align: center; 
+            margin: 30px 0; 
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        .qr-text { color:#8B2635; font-weight:600; margin: 10px 0; }
+        .qr-link { color:#8B2635; font-weight:600; text-decoration: none; }
+        .qr-link:hover { text-decoration: underline; }
     </style>
     """,
     unsafe_allow_html=True
@@ -67,7 +76,7 @@ if os.path.exists("assets/survey_qr.png"):
     with col2:
         st.image("assets/survey_qr.png", width=280)
         st.markdown('<p class="qr-text">👆 Scan QR Code</p>', unsafe_allow_html=True)
-        st.markdown('<p class="qr-text"><strong>or visit:</strong> https://survey.soulwaresystems.com</p>', unsafe_allow_html=True)
+        st.markdown('<p class="qr-text"><strong>or visit:</strong> <a href="https://survey.soulwaresystems.com" target="_blank" class="qr-link">https://survey.soulwaresystems.com</a></p>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ----- Demographics (CSC required) -----
