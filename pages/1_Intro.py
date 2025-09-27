@@ -117,8 +117,10 @@ with st.form("demographics_form"):
             st.session_state.user_csc   = csc
             st.session_state.user_email = email.strip()
             st.session_state.demographics_completed = True
-            st.success("✅ Saved! Use the sidebar to open **Survey**.")
+            st.success("✅ Demographics saved! Redirecting to survey...")
             st.balloons()
+            # Auto-redirect to survey page
+            st.switch_page("pages/2_Survey.py")
 
 if st.session_state.get("demographics_completed"):
     st.success("✅ Demographics complete — open **Survey** from the sidebar.")
