@@ -21,9 +21,9 @@ st.set_page_config(page_title="Training Feedback Survey", layout="wide")
 st.markdown(
     """
     <style>
-        /* Main background with tan clipboard style */
+        /* Main background with Results page color scheme */
         .stApp {
-            background: linear-gradient(135deg, #D2B48C 0%, #F5E6D3 50%, #E6D2B8 100%);
+            background: linear-gradient(135deg, #2F1B14 0%, #8B2635 50%, #2F1B14 100%);
             min-height: 100vh;
             position: relative;
         }
@@ -36,12 +36,12 @@ st.markdown(
             right: 20px;
             bottom: 20px;
             background: 
-                linear-gradient(90deg, #8B4513 0px, #8B4513 2px, transparent 2px, transparent 100%),
-                linear-gradient(180deg, #8B4513 0px, #8B4513 2px, transparent 2px, transparent 100%);
-            border: 3px solid #8B4513;
+                linear-gradient(90deg, #8B2635 0px, #8B2635 2px, transparent 2px, transparent 100%),
+                linear-gradient(180deg, #8B2635 0px, #8B2635 2px, transparent 2px, transparent 100%);
+            border: 3px solid #8B2635;
             border-radius: 8px;
             box-shadow: 
-                inset 0 0 20px rgba(139, 69, 19, 0.1),
+                inset 0 0 20px rgba(139, 38, 53, 0.1),
                 0 8px 32px rgba(0,0,0,0.2);
             pointer-events: none;
             z-index: 0;
@@ -54,7 +54,7 @@ st.markdown(
         
         /* Header styling with granulated glowing effect */
         .main-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+            background: linear-gradient(135deg, #2F1B14 0%, #8B2635 50%, #2F1B14 100%);
             background-size: 200% 200%;
             animation: gradientShift 4s ease infinite;
             padding: 2rem;
@@ -62,9 +62,9 @@ st.markdown(
             text-align: center;
             margin-bottom: 2rem;
             box-shadow: 
-                0 0 20px rgba(102, 126, 234, 0.4),
-                0 0 40px rgba(118, 75, 162, 0.3),
-                0 0 60px rgba(102, 126, 234, 0.2),
+                0 0 20px rgba(139, 38, 53, 0.4),
+                0 0 40px rgba(47, 27, 20, 0.3),
+                0 0 60px rgba(139, 38, 53, 0.2),
                 0 8px 32px rgba(0,0,0,0.1);
             border: 1px solid rgba(255,255,255,0.3);
             position: relative;
@@ -101,7 +101,7 @@ st.markdown(
             text-shadow: 
                 0 0 10px rgba(255,255,255,0.5),
                 0 0 20px rgba(255,255,255,0.3),
-                0 0 30px rgba(102, 126, 234, 0.4),
+                0 0 30px rgba(139, 38, 53, 0.4),
                 2px 2px 4px rgba(0,0,0,0.3);
             position: relative;
             z-index: 2;
@@ -113,7 +113,7 @@ st.markdown(
             font-weight: 300;
             text-shadow: 
                 0 0 8px rgba(255,255,255,0.3),
-                0 0 15px rgba(118, 75, 162, 0.3),
+                0 0 15px rgba(139, 38, 53, 0.3),
                 1px 1px 2px rgba(0,0,0,0.2);
             position: relative;
             z-index: 2;
@@ -136,16 +136,16 @@ st.markdown(
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
         
-        /* Demographics section with clipboard paper theme */
+        /* Demographics section with Results page theme */
         .demographics-container {
             background: linear-gradient(135deg, #FFFEF7 0%, #F8F6F0 100%);
             padding: 1.5rem;
             border-radius: 8px;
             margin: 1rem;
             box-shadow: 
-                0 4px 15px rgba(139, 69, 19, 0.2),
+                0 4px 15px rgba(139, 38, 53, 0.2),
                 inset 0 1px 0 rgba(255,255,255,0.8);
-            border: 1px solid #D2B48C;
+            border: 1px solid #8B2635;
             position: relative;
         }
         
@@ -156,12 +156,12 @@ st.markdown(
             top: 0;
             bottom: 0;
             width: 1px;
-            background: #E8D5C4;
+            background: #D8C4C8;
             opacity: 0.7;
         }
         
         .demographics-container h3 {
-            color: #654321 !important;
+            color: #2F1B14 !important;
             font-weight: 700;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
@@ -172,16 +172,16 @@ st.markdown(
             font-weight: 600;
         }
         
-        /* Content containers with paper-like appearance */
+        /* Content containers with Results page appearance */
         .content-container {
             background: linear-gradient(135deg, #FFFEF7 0%, #F8F6F0 100%);
             padding: 1.5rem;
             border-radius: 8px;
             margin: 1rem;
             box-shadow: 
-                0 4px 15px rgba(139, 69, 19, 0.2),
+                0 4px 15px rgba(139, 38, 53, 0.2),
                 inset 0 1px 0 rgba(255,255,255,0.8);
-            border: 1px solid #D2B48C;
+            border: 1px solid #8B2635;
             position: relative;
         }
         
@@ -192,13 +192,13 @@ st.markdown(
             top: 0;
             bottom: 0;
             width: 1px;
-            background: #E8D5C4;
+            background: #D8C4C8;
             opacity: 0.7;
         }
         
         /* Enhanced text visibility with darker colors */
         .content-container h3 {
-            color: #654321 !important;
+            color: #2F1B14 !important;
             font-weight: 700;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
@@ -439,7 +439,7 @@ responses = {}
 
 for section_key, skills in SECTION_SKILLS.items():
     section_name = section_key.replace("_Skills_Important", "").replace("_", " ")
-    st.markdown(f'<h2 style="text-align: center; color: #654321; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">{section_name} Section</h2>', unsafe_allow_html=True)
+    st.markdown(f'<h2 style="text-align: center; color: #2F1B14; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">{section_name} Section</h2>', unsafe_allow_html=True)
 
     # 1. Skills (multiple choice)
     responses[section_key] = st.radio(
@@ -482,7 +482,7 @@ for section_key, skills in SECTION_SKILLS.items():
     responses[section_name + "_Audit_Issues"] = f"{audit} - {audit_details}"
 
 # ---------------- Onboarding ----------------
-st.markdown('<h2 style="text-align: center; color: #654321; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Onboarding</h2>', unsafe_allow_html=True)
+st.markdown('<h2 style="text-align: center; color: #2F1B14; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Onboarding</h2>', unsafe_allow_html=True)
 onboarding_desc = st.text_area(
     "1. Describe how a new hire is onboarded in your CSC."
 )
@@ -512,7 +512,7 @@ if ojt_assessment in ["Sometimes", "Rarely", "Never"]:
     ojt_details = st.text_area("If not consistently: What factors prevent successful completion?")
 
 # ---------------- Survey Experience ----------------
-st.markdown('<h2 style="text-align: center; color: #654321; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Feedback on Survey Experience</h2>', unsafe_allow_html=True)
+st.markdown('<h2 style="text-align: center; color: #2F1B14; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Feedback on Survey Experience</h2>', unsafe_allow_html=True)
 ai_rating = st.slider("1. How did you like the hybrid AI guided survey structure?", 1, 5, 3)
 ai_comments = st.text_area("2. Comments on the AI survey experience")
 recommend = st.radio("3. Would you recommend this survey app?", ["Yes", "No", "Maybe"])
