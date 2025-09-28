@@ -3,9 +3,51 @@ Training Feedback Survey Page
 
 Collects survey responses for Title Class, FDRI/DLID, Driver examiners,
 Compliance, and Advanced VDH FDRII training. Saves results to the master CSV + Excel.
-"""
-
-import os
+        /* Enhanced text visibility with black colors */
+        .content-container h3 {
+            color: #000000 !important;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+        }
+        
+        .content-container p, .content-container div {
+            color: #FFFFFF !important;
+            line-height: 1.6;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* Gradient burgundy section header banners */
+        .gradient-header {
+            background: linear-gradient(135deg, #8B2635 0%, #2F1B14 50%, #8B2635 100%);
+            background-size: 200% 200%;
+            animation: gradientText 3s ease infinite;
+            color: white;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.3em;
+            margin: 2rem 1.5rem 1rem 1.5rem;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 
+                0 0 15px rgba(139, 38, 53, 0.3),
+                0 0 30px rgba(47, 27, 20, 0.2),
+                0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* General text styling for better visibility on burgundy background */
+        p, div:not(.stButton) {
+            color: #FFFFFF !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }t os
 from datetime import datetime
 import pandas as pd
 import streamlit as st
@@ -316,18 +358,16 @@ st.markdown(
 )
 
 # Instructions section
-st.markdown('<div class="content-container">', unsafe_allow_html=True)
-st.markdown("### 📋 Instructions")
+st.markdown('<div class="gradient-header">📋 Instructions</div>', unsafe_allow_html=True)
 st.write("""
 - This survey should take about 10 minutes
 - Please complete your demographics below to begin the survey
 - All responses are confidential and will help improve our training programs
 """)
-st.markdown('</div>', unsafe_allow_html=True)
 
 # Demographics Collection (expandable after CSC selection)
+st.markdown('<div class="gradient-header">👤 Demographics</div>', unsafe_allow_html=True)
 st.markdown('<div class="demographics-container">', unsafe_allow_html=True)
-st.markdown("### 👤 Demographics")
 
 # Initialize session state
 if "demographics_completed" not in st.session_state:
@@ -439,7 +479,9 @@ responses = {}
 
 for section_key, skills in SECTION_SKILLS.items():
     section_name = section_key.replace("_Skills_Important", "").replace("_", " ")
-    st.markdown(f'<h2 style="text-align: center; color: #2F1B14; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">{section_name} Section</h2>', unsafe_allow_html=True)
+    
+    # Create gradient banner for section header
+    st.markdown(f'<div class="gradient-header">{section_name} Section</div>', unsafe_allow_html=True)
 
     # 1. Skills (multiple choice)
     responses[section_key] = st.radio(
@@ -482,7 +524,7 @@ for section_key, skills in SECTION_SKILLS.items():
     responses[section_name + "_Audit_Issues"] = f"{audit} - {audit_details}"
 
 # ---------------- Onboarding ----------------
-st.markdown('<h2 style="text-align: center; color: #2F1B14; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Onboarding</h2>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-header">Onboarding</div>', unsafe_allow_html=True)
 onboarding_desc = st.text_area(
     "1. Describe how a new hire is onboarded in your CSC."
 )
@@ -512,7 +554,7 @@ if ojt_assessment in ["Sometimes", "Rarely", "Never"]:
     ojt_details = st.text_area("If not consistently: What factors prevent successful completion?")
 
 # ---------------- Survey Experience ----------------
-st.markdown('<h2 style="text-align: center; color: #2F1B14; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Feedback on Survey Experience</h2>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-header">Feedback on Survey Experience</div>', unsafe_allow_html=True)
 ai_rating = st.slider("1. How did you like the hybrid AI guided survey structure?", 1, 5, 3)
 ai_comments = st.text_area("2. Comments on the AI survey experience")
 recommend = st.radio("3. Would you recommend this survey app?", ["Yes", "No", "Maybe"])
