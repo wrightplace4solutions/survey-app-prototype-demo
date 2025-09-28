@@ -128,17 +128,17 @@ st.markdown(
         
         /* Enhanced text visibility */
         .content-container h3 {
-            color: #2F1B14 !important;
+            color: #000000 !important;
             text-align: center;
             margin-bottom: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
         
         .content-container p, .content-container div {
-            color: #1A1A1A !important;
+            color: #000000 !important;
             line-height: 1.6;
-            font-weight: 500;
+            font-weight: 600;
         }
         
         /* Navigation buttons with Results page style */
@@ -219,8 +219,7 @@ st.markdown('</div>', unsafe_allow_html=True)
 st.markdown('<div class="content-container">', unsafe_allow_html=True)
 st.markdown("### 🎯 Getting Started")
 st.write("""
-In case you missed the instructions from our AI Assistant, please scan the QR Code or visit:
-**https://survey.soulwaresystems.com**
+In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.
 """)
 
 # QR Code placeholder
