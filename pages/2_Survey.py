@@ -3,51 +3,9 @@ Training Feedback Survey Page
 
 Collects survey responses for Title Class, FDRI/DLID, Driver examiners,
 Compliance, and Advanced VDH FDRII training. Saves results to the master CSV + Excel.
-        /* Enhanced text visibility with black colors */
-        .content-container h3 {
-            color: #000000 !important;
-            font-weight: 700;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
-        }
-        
-        .content-container p, .content-container div {
-            color: #FFFFFF !important;
-            line-height: 1.6;
-            font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-        
-        /* Gradient burgundy section header banners */
-        .gradient-header {
-            background: linear-gradient(135deg, #8B2635 0%, #2F1B14 50%, #8B2635 100%);
-            background-size: 200% 200%;
-            animation: gradientText 3s ease infinite;
-            color: white;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.3em;
-            margin: 2rem 1.5rem 1rem 1.5rem;
-            padding: 1.5rem 2rem;
-            border-radius: 12px;
-            box-shadow: 
-                0 0 15px rgba(139, 38, 53, 0.3),
-                0 0 30px rgba(47, 27, 20, 0.2),
-                0 4px 15px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.2);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-        
-        @keyframes gradientText {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* General text styling for better visibility on burgundy background */
-        p, div:not(.stButton) {
-            color: #FFFFFF !important;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }t os
+"""
+
+import os
 from datetime import datetime
 import pandas as pd
 import streamlit as st
