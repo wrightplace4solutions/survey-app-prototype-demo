@@ -135,18 +135,24 @@ st.markdown(
             text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
         
-        /* Gradient burgundy section headers */
+        /* Gradient burgundy section header banners */
         .gradient-header {
             background: linear-gradient(135deg, #8B2635 0%, #2F1B14 50%, #8B2635 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientText 3s ease infinite;
+            color: white;
             text-align: center;
             font-weight: 700;
             font-size: 1.3em;
-            margin: 0 0 1rem 0;
-            text-shadow: none;
-            animation: gradientText 3s ease infinite;
+            margin: 2rem 1.5rem 1rem 1.5rem;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 
+                0 0 15px rgba(139, 38, 53, 0.3),
+                0 0 30px rgba(47, 27, 20, 0.2),
+                0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         
         @keyframes gradientText {
@@ -156,9 +162,16 @@ st.markdown(
         }
         
         .content-container p, .content-container div {
-            color: #000000 !important;
+            color: #FFFFFF !important;
             line-height: 1.6;
             font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* General text styling for better visibility on burgundy background */
+        p, div:not(.stButton) {
+            color: #FFFFFF !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         
         /* Navigation buttons with Results page style */
@@ -202,8 +215,7 @@ st.markdown(
 )
 
 # AI Introduction Video Section
-st.markdown('<div class="content-container">', unsafe_allow_html=True)
-st.markdown('<h3 class="gradient-header">🤖 Meet Your AI Survey Assistant</h3>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-header">🤖 Meet Your AI Survey Assistant</div>', unsafe_allow_html=True)
 
 # Check if video file exists
 video_file = "assets/avatar_intro.mp4"
@@ -213,15 +225,13 @@ else:
     st.info("🎬 AI Introduction Video will be displayed here")
     st.markdown("*Video file: assets/avatar_intro.mp4*")
 
-st.markdown('<h3 class="gradient-header">📋 Survey System</h3>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-header">📋 Survey System</div>', unsafe_allow_html=True)
 st.write("""
 This application helps us gather valuable feedback about our training programs to continuously improve the quality and effectiveness of our training offerings.
 """)
-st.markdown('</div>', unsafe_allow_html=True)
 
 # How to Use This System
-st.markdown('<div class="content-container">', unsafe_allow_html=True)
-st.markdown('<h3 class="gradient-header">🚀 How to Use This System:</h3>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-header">🚀 How to Use This System:</div>', unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 
@@ -233,11 +243,8 @@ with col2:
     if st.button("📊 View Results", key="results_nav", help="Analyze survey results and trends (for administrators)"):
         st.switch_page("pages/3_Results.py")
 
-st.markdown('</div>', unsafe_allow_html=True)
-
 # Getting Started Section
-st.markdown('<div class="content-container">', unsafe_allow_html=True)
-st.markdown('<h3 class="gradient-header">🎯 Getting Started</h3>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-header">🎯 Getting Started</div>', unsafe_allow_html=True)
 st.write("""
 In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.
 """)
@@ -249,5 +256,3 @@ if os.path.exists("assets/survey_qr.png"):
         st.image("assets/survey_qr.png", width=200, caption="Scan for Quick Access")
 else:
     st.info("� QR Code will be displayed here (assets/survey_qr.png)")
-
-st.markdown('</div>', unsafe_allow_html=True)
