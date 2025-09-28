@@ -9,31 +9,54 @@ import streamlit as st
 
 st.set_page_config(page_title="Training Feedback Survey", layout="wide")
 
-# Enhanced styling similar to survey page
+# Enhanced styling with tan clipboard design
 st.markdown(
     """
     <style>
-        /* Main background with subtle gradient */
+        /* Main background with tan clipboard style */
         .stApp {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #D2B48C 0%, #F5E6D3 50%, #E6D2B8 100%);
             min-height: 100vh;
+            position: relative;
         }
         
-        /* Header styling with granulated glowing effect */
+        .stApp::before {
+            content: '';
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: 
+                linear-gradient(90deg, #8B4513 0px, #8B4513 2px, transparent 2px, transparent 100%),
+                linear-gradient(180deg, #8B4513 0px, #8B4513 2px, transparent 2px, transparent 100%);
+            border: 3px solid #8B4513;
+            border-radius: 8px;
+            box-shadow: 
+                inset 0 0 20px rgba(139, 69, 19, 0.1),
+                0 8px 32px rgba(0,0,0,0.2);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .stApp > div {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header styling with clipboard clip effect */
         .main-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+            background: linear-gradient(135deg, #4A4A4A 0%, #2F2F2F 50%, #4A4A4A 100%);
             background-size: 200% 200%;
             animation: gradientShift 4s ease infinite;
             padding: 2rem;
             border-radius: 15px;
             text-align: center;
-            margin-bottom: 2rem;
+            margin: 2rem 1rem;
             box-shadow: 
-                0 0 20px rgba(102, 126, 234, 0.4),
-                0 0 40px rgba(118, 75, 162, 0.3),
-                0 0 60px rgba(102, 126, 234, 0.2),
-                0 8px 32px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
+                0 0 20px rgba(0,0,0,0.3),
+                0 8px 32px rgba(0,0,0,0.2);
+            border: 2px solid #8B4513;
             position: relative;
             overflow: hidden;
         }
@@ -41,13 +64,26 @@ st.markdown(
         .main-header::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 8s linear infinite;
-            pointer-events: none;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 20px;
+            background: linear-gradient(135deg, #C0C0C0, #808080);
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .main-header::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 10px;
+            background: #606060;
+            border-radius: 0 0 4px 4px;
         }
         
         .main-header h1 {
@@ -56,9 +92,7 @@ st.markdown(
             font-size: 2.5em;
             text-shadow: 
                 0 0 10px rgba(255,255,255,0.5),
-                0 0 20px rgba(255,255,255,0.3),
-                0 0 30px rgba(102, 126, 234, 0.4),
-                2px 2px 4px rgba(0,0,0,0.3);
+                2px 2px 4px rgba(0,0,0,0.7);
             position: relative;
             z-index: 2;
         }
@@ -68,9 +102,7 @@ st.markdown(
             margin: 10px 0 0 0;
             font-weight: 300;
             text-shadow: 
-                0 0 8px rgba(255,255,255,0.3),
-                0 0 15px rgba(118, 75, 162, 0.3),
-                1px 1px 2px rgba(0,0,0,0.2);
+                1px 1px 2px rgba(0,0,0,0.5);
             position: relative;
             z-index: 2;
         }
@@ -81,38 +113,68 @@ st.markdown(
             100% { background-position: 0% 50%; }
         }
         
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Content containers */
+        /* Content containers with paper-like appearance */
         .content-container {
-            background: rgba(255,255,255,0.9);
+            background: linear-gradient(135deg, #FFFEF7 0%, #F8F6F0 100%);
             padding: 2rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            margin: 1.5rem;
+            box-shadow: 
+                0 4px 15px rgba(139, 69, 19, 0.2),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            border: 1px solid #D2B48C;
+            position: relative;
         }
         
-        /* Navigation buttons */
+        .content-container::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: #E8D5C4;
+            opacity: 0.7;
+        }
+        
+        /* Enhanced text visibility */
+        .content-container h3 {
+            color: #8B4513 !important;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+        }
+        
+        .content-container p, .content-container div {
+            color: #2F1B14 !important;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        
+        /* Navigation buttons with clipboard style */
         .stButton > button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            color: white !important;
+            border: 2px solid #654321;
+            border-radius: 8px;
             padding: 1rem 2rem;
             font-size: 1.1em;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 
+                0 4px 15px rgba(139, 69, 19, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
             transition: all 0.3s ease;
             width: 100%;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
         
         .stButton > button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            box-shadow: 
+                0 6px 20px rgba(139, 69, 19, 0.4),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+            background: linear-gradient(135deg, #A0522D 0%, #8B4513 100%);
         }
     </style>
     """,
@@ -142,7 +204,7 @@ else:
     st.info("🎬 AI Introduction Video will be displayed here")
     st.markdown("*Video file: assets/avatar_intro.mp4*")
 
-st.markdown("### Survey System")
+st.markdown("### 📋 Survey System")
 st.write("""
 This application helps us gather valuable feedback about our training programs to continuously improve the quality and effectiveness of our training offerings.
 """)

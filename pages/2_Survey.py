@@ -21,10 +21,35 @@ st.set_page_config(page_title="Training Feedback Survey", layout="wide")
 st.markdown(
     """
     <style>
-        /* Main background with subtle gradient */
+        /* Main background with tan clipboard style */
         .stApp {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #D2B48C 0%, #F5E6D3 50%, #E6D2B8 100%);
             min-height: 100vh;
+            position: relative;
+        }
+        
+        .stApp::before {
+            content: '';
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: 
+                linear-gradient(90deg, #8B4513 0px, #8B4513 2px, transparent 2px, transparent 100%),
+                linear-gradient(180deg, #8B4513 0px, #8B4513 2px, transparent 2px, transparent 100%);
+            border: 3px solid #8B4513;
+            border-radius: 8px;
+            box-shadow: 
+                inset 0 0 20px rgba(139, 69, 19, 0.1),
+                0 8px 32px rgba(0,0,0,0.2);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .stApp > div {
+            position: relative;
+            z-index: 1;
         }
         
         /* Header styling with granulated glowing effect */
@@ -111,24 +136,77 @@ st.markdown(
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
         
-        /* Demographics section with spring theme */
+        /* Demographics section with clipboard paper theme */
         .demographics-container {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background: linear-gradient(135deg, #FFFEF7 0%, #F8F6F0 100%);
             padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            margin: 1rem;
+            box-shadow: 
+                0 4px 15px rgba(139, 69, 19, 0.2),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            border: 1px solid #D2B48C;
+            position: relative;
         }
         
-        /* Content containers */
+        .demographics-container::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: #E8D5C4;
+            opacity: 0.7;
+        }
+        
+        .demographics-container h3 {
+            color: #8B4513 !important;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+        }
+        
+        .demographics-container p, .demographics-container div {
+            color: #2F1B14 !important;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        
+        /* Content containers with paper-like appearance */
         .content-container {
-            background: rgba(255,255,255,0.9);
+            background: linear-gradient(135deg, #FFFEF7 0%, #F8F6F0 100%);
             padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            margin: 1rem;
+            box-shadow: 
+                0 4px 15px rgba(139, 69, 19, 0.2),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            border: 1px solid #D2B48C;
+            position: relative;
+        }
+        
+        .content-container::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: #E8D5C4;
+            opacity: 0.7;
+        }
+        
+        /* Enhanced text visibility */
+        .content-container h3 {
+            color: #8B4513 !important;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+        }
+        
+        .content-container p, .content-container div {
+            color: #2F1B14 !important;
+            line-height: 1.6;
+            font-weight: 500;
         }
         
         /* Question containers with varied colors */
@@ -156,22 +234,28 @@ st.markdown(
             border-left: 4px solid #ba68c8;
         }
         
-        /* Submit button styling */
+        /* Submit button with clipboard style */
         .stButton > button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 25px;
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            color: white !important;
+            border: 2px solid #654321;
+            border-radius: 8px;
             padding: 0.75rem 2rem;
             font-size: 1.1em;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 
+                0 4px 15px rgba(139, 69, 19, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
             transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
         
         .stButton > button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            box-shadow: 
+                0 6px 20px rgba(139, 69, 19, 0.4),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+            background: linear-gradient(135deg, #A0522D 0%, #8B4513 100%);
         }
         
         /* Custom warning alert styling - comprehensive targeting */
@@ -355,7 +439,7 @@ responses = {}
 
 for section_key, skills in SECTION_SKILLS.items():
     section_name = section_key.replace("_Skills_Important", "").replace("_", " ")
-    st.header(f"{section_name} Section")
+    st.markdown(f'<h2 style="text-align: center; color: #8B4513; margin: 2rem 0 1rem 0; font-weight: 600; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">{section_name} Section</h2>', unsafe_allow_html=True)
 
     # 1. Skills (multiple choice)
     responses[section_key] = st.radio(
@@ -398,7 +482,7 @@ for section_key, skills in SECTION_SKILLS.items():
     responses[section_name + "_Audit_Issues"] = f"{audit} - {audit_details}"
 
 # ---------------- Onboarding ----------------
-st.header("Onboarding")
+st.markdown('<h2 style="text-align: center; color: #8B4513; margin: 2rem 0 1rem 0; font-weight: 600; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Onboarding</h2>', unsafe_allow_html=True)
 onboarding_desc = st.text_area(
     "1. Describe how a new hire is onboarded in your CSC."
 )
@@ -428,7 +512,7 @@ if ojt_assessment in ["Sometimes", "Rarely", "Never"]:
     ojt_details = st.text_area("If not consistently: What factors prevent successful completion?")
 
 # ---------------- Survey Experience ----------------
-st.header("Feedback on Survey Experience")
+st.markdown('<h2 style="text-align: center; color: #8B4513; margin: 2rem 0 1rem 0; font-weight: 600; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Feedback on Survey Experience</h2>', unsafe_allow_html=True)
 ai_rating = st.slider("1. How did you like the hybrid AI guided survey structure?", 1, 5, 3)
 ai_comments = st.text_area("2. Comments on the AI survey experience")
 recommend = st.radio("3. Would you recommend this survey app?", ["Yes", "No", "Maybe"])
