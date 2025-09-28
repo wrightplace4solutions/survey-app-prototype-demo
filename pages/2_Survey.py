@@ -121,6 +121,16 @@ st.markdown(
             border: 1px solid rgba(255,255,255,0.3);
         }
         
+        /* Content containers */
+        .content-container {
+            background: rgba(255,255,255,0.9);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
         /* Question containers with varied colors */
         .question-container-1 {
             background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
@@ -221,26 +231,85 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Check demographics
-if not st.session_state.get("demographics_completed"):
-    st.warning("⚠️ No demographics found. Please complete the Intro page first.")
-    st.stop()
-
-# Show demographics with enhanced styling
-st.markdown('<div class="demographics-container">', unsafe_allow_html=True)
-st.markdown("### 👤 Your Information")
-st.markdown(
-    f"""
-    <div style='background: rgba(255,255,255,0.7); padding: 1rem; border-radius: 8px; margin: 0.5rem 0;'>
-        <strong>📛 Name:</strong> {st.session_state.get('user_name', '')}<br>
-        <strong>👔 Role/Title:</strong> {st.session_state.get('user_role', '')}<br>
-        <strong>🏢 CSC:</strong> {st.session_state.get('user_csc', '')}<br>
-        <strong>📧 Email:</strong> {st.session_state.get('user_email', '')}
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+# Instructions section
+st.markdown('<div class="content-container">', unsafe_allow_html=True)
+st.markdown("### 📋 Instructions")
+st.write("""
+- This survey should take about 10 minutes
+- Please complete your demographics below to begin the survey
+- All responses are confidential and will help improve our training programs
+""")
 st.markdown('</div>', unsafe_allow_html=True)
+
+# Demographics Collection (expandable after CSC selection)
+st.markdown('<div class="demographics-container">', unsafe_allow_html=True)
+st.markdown("### 👤 Demographics")
+
+# Initialize session state
+if "demographics_completed" not in st.session_state:
+    st.session_state.demographics_completed = False
+
+if not st.session_state.get("demographics_completed"):
+    st.markdown('<p style="color: #37474f; font-weight: 600;">Please select your CSC location to proceed with the survey.</p>', unsafe_allow_html=True)
+    
+    with st.form("demographics_form"):
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("**Name** (Optional)")
+            name = st.text_input("Name", value=st.session_state.get("user_name", ""), label_visibility="collapsed")
+            st.markdown("**Role/Title** (Optional)")
+            role = st.text_input("Role/Title", value=st.session_state.get("user_role", ""), label_visibility="collapsed")
+        
+        with col2:
+            st.markdown("**CSC Location** (Required)")
+            csc = st.selectbox("CSC", [
+                "", "Ashland", "Chester", "Chesterfield", "East Henrico", "Emporia", "Ft Gregg Adams", "Hopewell",
+                "Kilmarnock", "Petersburg", "Richmond Center (HQ)", "Tappahannock", "West Henrico", "Williamsburg",
+                "Other (please specify in email field)"
+            ], index=0, label_visibility="collapsed")
+            st.markdown("**Email** (Optional)")
+            email = st.text_input("Email", value=st.session_state.get("user_email", ""), 
+                                 label_visibility="collapsed", placeholder="your.email@domain.com")
+        
+        submitted = st.form_submit_button("💾 Save Demographics & Continue", type="primary", use_container_width=True)
+        
+        if submitted:
+            if not csc:
+                st.error("❌ Please select your CSC location.")
+            else:
+                st.session_state.user_name = name.strip() or "Anonymous"
+                st.session_state.user_role = role.strip() or "Not Specified"
+                st.session_state.user_csc = csc
+                st.session_state.user_email = email.strip()
+                st.session_state.demographics_completed = True
+                st.success("✅ Demographics saved! Survey unlocked below.")
+                st.balloons()
+                st.rerun()
+
+else:
+    # Show saved demographics (expandable)
+    st.markdown("### ✅ Your Information")
+    st.markdown(
+        f"""
+        <div style='background: rgba(255,255,255,0.7); padding: 1rem; border-radius: 8px; margin: 0.5rem 0;'>
+            <strong>📛 Name:</strong> {st.session_state.get('user_name', '')}<br>
+            <strong>👔 Role/Title:</strong> {st.session_state.get('user_role', '')}<br>
+            <strong>🏢 CSC:</strong> {st.session_state.get('user_csc', '')}<br>
+            <strong>📧 Email:</strong> {st.session_state.get('user_email', '')}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    if st.button("🔄 Edit Demographics", key="edit_demographics"):
+        st.session_state.demographics_completed = False
+        st.rerun()
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Only show survey if demographics completed
+if not st.session_state.get("demographics_completed"):
+    st.stop()
 
 # --- Skills options for each section ---
 SECTION_SKILLS = {
