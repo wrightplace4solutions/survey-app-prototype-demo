@@ -164,21 +164,46 @@ st.markdown(
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
         
-        /* Custom warning alert styling */
+        /* Custom warning alert styling - comprehensive targeting */
         .stAlert > div {
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px !important;
+            border: 1px solid rgba(255,255,255,0.2) !important;
         }
         
+        /* Target warning alerts specifically */
         .stAlert[data-baseweb="notification"] {
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%) !important;
-            border-left: 4px solid #5c6bc0 !important;
-            color: #37474f !important;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f4ff 100%) !important;
+            border-left: 4px solid #4caf50 !important;
+            color: #2e7d32 !important;
         }
         
         .stAlert[data-baseweb="notification"] > div {
             background: transparent !important;
-            color: #37474f !important;
+            color: #2e7d32 !important;
+        }
+        
+        /* Alternative targeting for different Streamlit versions */
+        div[data-testid="stAlert"] {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f4ff 100%) !important;
+            border-left: 4px solid #4caf50 !important;
+            border-radius: 10px !important;
+        }
+        
+        div[data-testid="stAlert"] > div {
+            color: #2e7d32 !important;
+            background: transparent !important;
+        }
+        
+        /* Target warning text content */
+        div[data-testid="stAlert"] div[data-testid="stMarkdownContainer"] p {
+            color: #2e7d32 !important;
+        }
+        
+        /* Override any yellow warning styling */
+        .stWarning, .st-warning {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f4ff 100%) !important;
+            border-left: 4px solid #4caf50 !important;
+            color: #2e7d32 !important;
         }
     </style>
     """,
