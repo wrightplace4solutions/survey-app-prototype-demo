@@ -210,12 +210,12 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Enhanced header
+# Enhanced banner header  
 st.markdown(
     """
     <div class="main-header">
         <h1>📊 Training Feedback Survey</h1>
-        <h3>Excellence Through Training - Your Voice Matters</h3>
+        <h3>Excellence Through Training!</h3>
     </div>
     """,
     unsafe_allow_html=True,
