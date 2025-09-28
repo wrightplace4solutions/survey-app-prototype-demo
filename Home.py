@@ -242,6 +242,4 @@ if os.path.exists("assets/survey_qr.png"):
 else:
     st.info("� QR Code will be displayed here (assets/survey_qr.png)")
 
-st.markdown("### � Thank You!")
-st.write("Thank you for taking the time to provide your valuable feedback!")
 st.markdown('</div>', unsafe_allow_html=True)

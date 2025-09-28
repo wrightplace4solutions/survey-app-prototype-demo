@@ -161,15 +161,15 @@ st.markdown(
         }
         
         .demographics-container h3 {
-            color: #8B4513 !important;
-            font-weight: 600;
+            color: #654321 !important;
+            font-weight: 700;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
         
         .demographics-container p, .demographics-container div {
-            color: #2F1B14 !important;
+            color: #1A1A1A !important;
             line-height: 1.6;
-            font-weight: 500;
+            font-weight: 600;
         }
         
         /* Content containers with paper-like appearance */
@@ -196,17 +196,17 @@ st.markdown(
             opacity: 0.7;
         }
         
-        /* Enhanced text visibility */
+        /* Enhanced text visibility with darker colors */
         .content-container h3 {
-            color: #8B4513 !important;
-            font-weight: 600;
+            color: #654321 !important;
+            font-weight: 700;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
         
         .content-container p, .content-container div {
-            color: #2F1B14 !important;
+            color: #1A1A1A !important;
             line-height: 1.6;
-            font-weight: 500;
+            font-weight: 600;
         }
         
         /* Question containers with varied colors */
@@ -439,7 +439,7 @@ responses = {}
 
 for section_key, skills in SECTION_SKILLS.items():
     section_name = section_key.replace("_Skills_Important", "").replace("_", " ")
-    st.markdown(f'<h2 style="text-align: center; color: #8B4513; margin: 2rem 0 1rem 0; font-weight: 600; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">{section_name} Section</h2>', unsafe_allow_html=True)
+    st.markdown(f'<h2 style="text-align: center; color: #654321; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">{section_name} Section</h2>', unsafe_allow_html=True)
 
     # 1. Skills (multiple choice)
     responses[section_key] = st.radio(
@@ -482,7 +482,7 @@ for section_key, skills in SECTION_SKILLS.items():
     responses[section_name + "_Audit_Issues"] = f"{audit} - {audit_details}"
 
 # ---------------- Onboarding ----------------
-st.markdown('<h2 style="text-align: center; color: #8B4513; margin: 2rem 0 1rem 0; font-weight: 600; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Onboarding</h2>', unsafe_allow_html=True)
+st.markdown('<h2 style="text-align: center; color: #654321; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Onboarding</h2>', unsafe_allow_html=True)
 onboarding_desc = st.text_area(
     "1. Describe how a new hire is onboarded in your CSC."
 )
@@ -512,7 +512,7 @@ if ojt_assessment in ["Sometimes", "Rarely", "Never"]:
     ojt_details = st.text_area("If not consistently: What factors prevent successful completion?")
 
 # ---------------- Survey Experience ----------------
-st.markdown('<h2 style="text-align: center; color: #8B4513; margin: 2rem 0 1rem 0; font-weight: 600; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Feedback on Survey Experience</h2>', unsafe_allow_html=True)
+st.markdown('<h2 style="text-align: center; color: #654321; margin: 2rem 0 1rem 0; font-weight: 700; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Feedback on Survey Experience</h2>', unsafe_allow_html=True)
 ai_rating = st.slider("1. How did you like the hybrid AI guided survey structure?", 1, 5, 3)
 ai_comments = st.text_area("2. Comments on the AI survey experience")
 recommend = st.radio("3. Would you recommend this survey app?", ["Yes", "No", "Maybe"])
@@ -562,4 +562,8 @@ if st.button("Submit Survey"):
     df_excel.to_excel(EXCEL_FILE, index=False)
 
     st.success("✅ Thank you! Your survey response has been submitted.")
+    st.markdown('<div class="content-container">', unsafe_allow_html=True)
+    st.markdown("### 💝 Thank You! From Stephanie & Morgan")
+    st.write("Thank you for taking the time to provide your valuable feedback to help us continuously improve our training programs!")
+    st.markdown('</div>', unsafe_allow_html=True)
     st.balloons()
