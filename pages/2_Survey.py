@@ -675,7 +675,7 @@ if st.button("Submit Survey"):
     df_excel = pd.concat([df_excel, pd.DataFrame([record])], ignore_index=True)
     df_excel.to_excel(EXCEL_FILE, index=False)
 
-    st.success("✅ Thank you! Your survey response has been submitted.")
+    st.success("✅ Success! Your survey response has been submitted.")
     st.markdown("### 💝 Thank You! From Stephanie & Morgan")
     st.write("We really appreciate the time you took to provide your valuable feedback to help us continuously improve our training programs!")
     st.balloons()
