@@ -367,6 +367,33 @@ st.markdown(
             margin: 0 1.5rem 0.5rem 1.5rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
+        
+        /* Survey content alignment */
+        .survey-section-content {
+            margin: 0 1.5rem 2rem 1.5rem;
+            padding: 0;
+        }
+        
+        /* Align all survey form elements */
+        .survey-section-content .stRadio,
+        .survey-section-content .stTextArea,
+        .survey-section-content .stSlider,
+        .survey-section-content .stSelectbox {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Survey question text styling */
+        .survey-section-content > div > label {
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+        }
+        
+        /* Radio button and option styling */
+        .survey-section-content .stRadio > div > div > div {
+            color: #FFFFFF !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+        }
     </style>
     """,
     unsafe_allow_html=True,
@@ -561,6 +588,8 @@ for section_key, skills in SECTION_SKILLS.items():
 
 # ---------------- Onboarding ----------------
 st.markdown('<div class="gradient-header">Onboarding</div>', unsafe_allow_html=True)
+st.markdown('<div class="survey-section-content">', unsafe_allow_html=True)
+
 onboarding_desc = st.text_area(
     "1. Describe how a new hire is onboarded in your CSC."
 )
@@ -589,14 +618,21 @@ ojt_details = ""
 if ojt_assessment in ["Sometimes", "Rarely", "Never"]:
     ojt_details = st.text_area("If not consistently: What factors prevent successful completion?")
 
+st.markdown('</div>', unsafe_allow_html=True)
+
 # ---------------- Survey Experience ----------------
 st.markdown('<div class="gradient-header">Feedback on Survey Experience</div>', unsafe_allow_html=True)
+st.markdown('<div class="survey-section-content">', unsafe_allow_html=True)
+
 ai_rating = st.slider("1. How did you like the hybrid AI guided survey structure?", 1, 5, 3)
 ai_comments = st.text_area("2. Comments on the AI survey experience")
 recommend = st.radio("3. Would you recommend this survey app?", ["Yes", "No", "Maybe"])
 recommend_why = st.text_area("4. Why or why not?")
 
+st.markdown('</div>', unsafe_allow_html=True)
+
 # ---------------- Submit ----------------
+st.markdown('<div class="survey-section-content">', unsafe_allow_html=True)
 if st.button("Submit Survey"):
     record = {
         "SubmissionID": f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{st.session_state.get('user_name', '')}",
@@ -645,3 +681,5 @@ if st.button("Submit Survey"):
     st.write("Thank you for taking the time to provide your valuable feedback to help us continuously improve our training programs!")
     st.markdown('</div>', unsafe_allow_html=True)
     st.balloons()
+
+st.markdown('</div>', unsafe_allow_html=True)
