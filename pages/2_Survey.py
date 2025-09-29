@@ -676,10 +676,8 @@ if st.button("Submit Survey"):
     df_excel.to_excel(EXCEL_FILE, index=False)
 
     st.success("✅ Thank you! Your survey response has been submitted.")
-    st.markdown('<div class="content-container">', unsafe_allow_html=True)
     st.markdown("### 💝 Thank You! From Stephanie & Morgan")
-    st.write("Thank you for taking the time to provide your valuable feedback to help us continuously improve our training programs!")
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.write("We really appreciate the time you took to provide your valuable feedback to help us continuously improve our training programs!")
     st.balloons()
 
 st.markdown('</div>', unsafe_allow_html=True)
