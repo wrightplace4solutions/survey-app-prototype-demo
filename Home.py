@@ -9,15 +9,8 @@ import streamlit as st
 
 st.set_page_config(page_title="Training Feedback Survey", layout="wide")
 
-# Enhanced styling with tan clipboard de# QR Code section with centering
-st.markdown('<div class="qr-container">', unsafe_allow_html=True)
-if os.path.exists("assets/survey_qr.png"):
-    st.image("assets/survey_qr.png", width=200)
-    st.markdown('<div class="qr-caption">Scan for Quick Access<br>or visit survey.soulwaresystems.com</div>', unsafe_allow_html=True)
-else:
-    st.info("📱 QR Code will be displayed here (assets/survey_qr.png)")
-    st.markdown('<div class="qr-caption">Scan for Quick Access<br>or visit survey.soulwaresystems.com</div>', unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True).markdown(
+# Enhanced styling with tan clipboard design
+st.markdown(
     """
     <style>
         /* Main background with Results page color scheme */
