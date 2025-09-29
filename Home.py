@@ -257,7 +257,7 @@ st.markdown(
 )
 
 # How to Use This System
-st.markdown('<div class="gradient-header">🚀 How to Use This System:</div>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-header">🚀 How To Use This System:</div>', unsafe_allow_html=True)
 
 # Center the buttons using custom CSS container
 st.markdown('<div class="centered-buttons">', unsafe_allow_html=True)
