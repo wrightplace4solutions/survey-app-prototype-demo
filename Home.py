@@ -168,6 +168,31 @@ st.markdown(
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         
+        /* Flush-aligned text under banners */
+        .banner-text {
+            color: #FFFFFF !important;
+            text-align: left;
+            margin: 1rem 1.5rem;
+            padding: 0 2rem;
+            line-height: 1.6;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* Centered button container */
+        .centered-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin: 2rem 1.5rem;
+        }
+        
+        .centered-buttons .stButton {
+            flex: 0 0 auto;
+            min-width: 200px;
+        }
+        
         /* General text styling for better visibility on burgundy background */
         p, div:not(.stButton) {
             color: #FFFFFF !important;
@@ -226,28 +251,36 @@ else:
     st.markdown("*Video file: assets/avatar_intro.mp4*")
 
 st.markdown('<div class="gradient-header">📋 Survey System</div>', unsafe_allow_html=True)
-st.write("""
-This application helps us gather valuable feedback about our training programs to continuously improve the quality and effectiveness of our training offerings.
-""")
+st.markdown(
+    '<div class="banner-text">This application helps us gather valuable feedback about our training programs to continuously improve the quality and effectiveness of our training offerings.</div>',
+    unsafe_allow_html=True
+)
 
 # How to Use This System
 st.markdown('<div class="gradient-header">🚀 How to Use This System:</div>', unsafe_allow_html=True)
 
-col1, col2 = st.columns(2)
-
-with col1:
-    if st.button("📝 Take Survey", key="survey_nav", help="Complete the comprehensive training feedback survey"):
-        st.switch_page("pages/2_Survey.py")
+# Center the buttons using custom CSS container
+st.markdown('<div class="centered-buttons">', unsafe_allow_html=True)
+col1, col2, col3 = st.columns([1, 2, 1])
 
 with col2:
-    if st.button("📊 View Results", key="results_nav", help="Analyze survey results and trends (for administrators)"):
-        st.switch_page("pages/3_Results.py")
+    subcol1, subcol2 = st.columns(2)
+    with subcol1:
+        if st.button("📝 Take Survey", key="survey_nav", help="Complete the comprehensive training feedback survey"):
+            st.switch_page("pages/2_Survey.py")
+    
+    with subcol2:
+        if st.button("📊 View Results", key="results_nav", help="Analyze survey results and trends (for administrators)"):
+            st.switch_page("pages/3_Results.py")
+
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Getting Started Section
 st.markdown('<div class="gradient-header">🎯 Getting Started</div>', unsafe_allow_html=True)
-st.write("""
-In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.
-""")
+st.markdown(
+    '<div class="banner-text">In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.</div>',
+    unsafe_allow_html=True
+)
 
 # QR Code placeholder
 if os.path.exists("assets/survey_qr.png"):
