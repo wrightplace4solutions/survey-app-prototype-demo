@@ -9,6 +9,18 @@ import streamlit as st
 
 st.set_page_config(page_title="Training Feedback Survey", layout="wide")
 
+# Enhanced styling with tan c# QR Code section with centering
+st.markdown('<div class="qr-container">', unsafe_allow_html=True)
+if os.path.exists("assets/survey_qr.png"):
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col2:
+        st.image("assets/survey_qr.png", width=200)
+        st.markdown('<div class="qr-caption">Scan For Quick Access or visit survey.soulwaresystems.com</div>', unsafe_allow_html=True)
+else:
+    st.info("📱 QR Code will be displayed here (assets/survey_qr.png)")
+    st.markdown('<div class="qr-caption">Scan For Quick Access or visit survey.soulwaresystems.com</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
 # Enhanced styling with tan clipboard design
 st.markdown(
     """
@@ -222,6 +234,24 @@ st.markdown(
                 0 6px 20px rgba(139, 38, 53, 0.4),
                 inset 0 1px 0 rgba(255,255,255,0.3);
             background: linear-gradient(135deg, #8B2635 0%, #2F1B14 100%);
+        }
+        
+        /* Centered QR Code styling */
+        .qr-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem auto;
+            text-align: center;
+        }
+        
+        .qr-caption {
+            color: #FFFFFF !important;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-top: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
     </style>
     """,
