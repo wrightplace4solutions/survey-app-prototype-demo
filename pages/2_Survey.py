@@ -433,25 +433,25 @@ if "demographics_completed" not in st.session_state:
     st.session_state.demographics_completed = False
 
 if not st.session_state.get("demographics_completed"):
-    st.markdown('<div class="demographics-container">', unsafe_allow_html=True)
-    st.markdown('<p style="color: #37474f; font-weight: 600;">Please select your CSC location to proceed with the survey.</p>', unsafe_allow_html=True)
+    st.markdown('<div class="survey-section-content">', unsafe_allow_html=True)
+    st.markdown('<p style="color: #FFFFFF; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Please select your CSC location to proceed with the survey.</p>', unsafe_allow_html=True)
     
     with st.form("demographics_form"):
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown("**Name** (Optional)")
+            st.markdown('<p style="color: #FFFFFF; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"><strong>Name</strong> (Optional)</p>', unsafe_allow_html=True)
             name = st.text_input("Name", value=st.session_state.get("user_name", ""), label_visibility="collapsed")
-            st.markdown("**Role/Title** (Optional)")
+            st.markdown('<p style="color: #FFFFFF; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"><strong>Role/Title</strong> (Optional)</p>', unsafe_allow_html=True)
             role = st.text_input("Role/Title", value=st.session_state.get("user_role", ""), label_visibility="collapsed")
         
         with col2:
-            st.markdown("**CSC Location** (Required)")
+            st.markdown('<p style="color: #FFFFFF; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"><strong>CSC Location</strong> (Required)</p>', unsafe_allow_html=True)
             csc = st.selectbox("CSC", [
                 "", "Ashland", "Chester", "Chesterfield", "East Henrico", "Emporia", "Ft Gregg Adams", "Hopewell",
                 "Kilmarnock", "Petersburg", "Richmond Center (HQ)", "Tappahannock", "West Henrico", "Williamsburg",
                 "Other (please specify in email field)"
             ], index=0, label_visibility="collapsed")
-            st.markdown("**Email** (Optional)")
+            st.markdown('<p style="color: #FFFFFF; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"><strong>Email</strong> (Optional)</p>', unsafe_allow_html=True)
             email = st.text_input("Email", value=st.session_state.get("user_email", ""), 
                                  label_visibility="collapsed", placeholder="your.email@domain.com")
         
