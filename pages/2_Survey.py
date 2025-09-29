@@ -1,5 +1,5 @@
 """
-Training Feedback Survey Page
+Training Feedback Survey Page - Fixed Version
 
 Collects survey responses for Title Class, FDRI/DLID, Driver examiners,
 Compliance, and Advanced VDH FDRII training. Saves results to the master CSV + Excel.
@@ -119,187 +119,6 @@ st.markdown(
             z-index: 2;
         }
         
-        /* Section containers with colorful backgrounds */
-        .section-container {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .section-title {
-            color: white;
-            font-size: 1.5em;
-            margin-bottom: 1rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-        
-        /* Demographics section with Results page theme */
-        .demographics-container {
-            background: linear-gradient(135deg, #FFFEF7 0%, #F8F6F0 100%);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem;
-            box-shadow: 
-                0 4px 15px rgba(139, 38, 53, 0.2),
-                inset 0 1px 0 rgba(255,255,255,0.8);
-            border: 1px solid #8B2635;
-            position: relative;
-        }
-        
-        .demographics-container::before {
-            content: '';
-            position: absolute;
-            left: 2rem;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: #D8C4C8;
-            opacity: 0.7;
-        }
-        
-        .demographics-container h3 {
-            color: #2F1B14 !important;
-            font-weight: 700;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
-        }
-        
-        .demographics-container p, .demographics-container div {
-            color: #1A1A1A !important;
-            line-height: 1.6;
-            font-weight: 600;
-        }
-        
-        /* Content containers with Results page appearance */
-        .content-container {
-            background: linear-gradient(135deg, #FFFEF7 0%, #F8F6F0 100%);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem;
-            box-shadow: 
-                0 4px 15px rgba(139, 38, 53, 0.2),
-                inset 0 1px 0 rgba(255,255,255,0.8);
-            border: 1px solid #8B2635;
-            position: relative;
-        }
-        
-        .content-container::before {
-            content: '';
-            position: absolute;
-            left: 2rem;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: #D8C4C8;
-            opacity: 0.7;
-        }
-        
-        /* Enhanced text visibility with darker colors */
-        .content-container h3 {
-            color: #2F1B14 !important;
-            font-weight: 700;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
-        }
-        
-        .content-container p, .content-container div {
-            color: #1A1A1A !important;
-            line-height: 1.6;
-            font-weight: 600;
-        }
-        
-        /* Question containers with varied colors */
-        .question-container-1 {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 1rem;
-            border-radius: 10px;
-            margin: 0.5rem 0;
-            border-left: 4px solid #ff8a65;
-        }
-        
-        .question-container-2 {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            padding: 1rem;
-            border-radius: 10px;
-            margin: 0.5rem 0;
-            border-left: 4px solid #4db6ac;
-        }
-        
-        .question-container-3 {
-            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
-            padding: 1rem;
-            border-radius: 10px;
-            margin: 0.5rem 0;
-            border-left: 4px solid #ba68c8;
-        }
-        
-        /* Submit button with clipboard style */
-        .stButton > button {
-            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
-            color: white !important;
-            border: 2px solid #654321;
-            border-radius: 8px;
-            padding: 0.75rem 2rem;
-            font-size: 1.1em;
-            font-weight: 600;
-            box-shadow: 
-                0 4px 15px rgba(139, 69, 19, 0.3),
-                inset 0 1px 0 rgba(255,255,255,0.2);
-            transition: all 0.3s ease;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-        
-        .stButton > button:hover {
-            transform: translateY(-2px);
-            box-shadow: 
-                0 6px 20px rgba(139, 69, 19, 0.4),
-                inset 0 1px 0 rgba(255,255,255,0.3);
-            background: linear-gradient(135deg, #A0522D 0%, #8B4513 100%);
-        }
-        
-        /* Custom warning alert styling - comprehensive targeting */
-        .stAlert > div {
-            border-radius: 10px !important;
-            border: 1px solid rgba(255,255,255,0.2) !important;
-        }
-        
-        /* Target warning alerts specifically */
-        .stAlert[data-baseweb="notification"] {
-            background: linear-gradient(135deg, #e8f5e8 0%, #f0f4ff 100%) !important;
-            border-left: 4px solid #4caf50 !important;
-            color: #2e7d32 !important;
-        }
-        
-        .stAlert[data-baseweb="notification"] > div {
-            background: transparent !important;
-            color: #2e7d32 !important;
-        }
-        
-        /* Alternative targeting for different Streamlit versions */
-        div[data-testid="stAlert"] {
-            background: linear-gradient(135deg, #e8f5e8 0%, #f0f4ff 100%) !important;
-            border-left: 4px solid #4caf50 !important;
-            border-radius: 10px !important;
-        }
-        
-        div[data-testid="stAlert"] > div {
-            color: #2e7d32 !important;
-            background: transparent !important;
-        }
-        
-        /* Target warning text content */
-        div[data-testid="stAlert"] div[data-testid="stMarkdownContainer"] p {
-            color: #2e7d32 !important;
-        }
-        
-        /* Override any yellow warning styling */
-        .stWarning, .st-warning {
-            background: linear-gradient(135deg, #e8f5e8 0%, #f0f4ff 100%) !important;
-            border-left: 4px solid #4caf50 !important;
-            color: #2e7d32 !important;
-        }
-        
         /* Gradient burgundy section header banners */
         .gradient-header {
             background: linear-gradient(135deg, #8B2635 0%, #2F1B14 50%, #8B2635 100%);
@@ -326,13 +145,51 @@ st.markdown(
             100% { background-position: 0% 50%; }
         }
         
-        /* General text styling for better visibility on burgundy background */
+        /* Demographics section with Results page theme */
+        .aligned-demographics-info {
+            background: rgba(255,255,255,0.7);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0 1.5rem 0.5rem 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Submit button styling */
+        .stButton > button {
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            color: white !important;
+            border: 2px solid #654321;
+            border-radius: 8px;
+            padding: 0.75rem 2rem;
+            font-size: 1.1em;
+            font-weight: 600;
+            box-shadow: 
+                0 4px 15px rgba(139, 69, 19, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .stButton > button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 20px rgba(139, 69, 19, 0.4),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+            background: linear-gradient(135deg, #A0522D 0%, #8B4513 100%);
+        }
+        
+        /* General text styling */
         p, div:not(.stButton) {
             color: #FFFFFF !important;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         
-        /* Left-align bullet points flush with banner container */
+        /* Survey content alignment */
+        .survey-section-content {
+            margin: 0 1.5rem 2rem 1.5rem;
+            padding: 0;
+        }
+        
         .aligned-content {
             margin: 0 1.5rem;
             padding: 0;
@@ -348,51 +205,6 @@ st.markdown(
             margin-bottom: 0.5rem;
             color: #FFFFFF !important;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-        
-        /* Aligned demographics title */
-        .aligned-demographics-title {
-            margin: 1rem 1.5rem 0.5rem 1.5rem;
-            color: #FFFFFF !important;
-            font-size: 1.2em;
-            font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-        
-        /* Aligned demographics info container */
-        .aligned-demographics-info {
-            background: rgba(255,255,255,0.7);
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 0 1.5rem 0.5rem 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        /* Survey content alignment */
-        .survey-section-content {
-            margin: 0 1.5rem 2rem 1.5rem;
-            padding: 0;
-        }
-        
-        /* Align all survey form elements */
-        .survey-section-content .stRadio,
-        .survey-section-content .stTextArea,
-        .survey-section-content .stSlider,
-        .survey-section-content .stSelectbox {
-            margin-bottom: 1.5rem;
-        }
-        
-        /* Survey question text styling */
-        .survey-section-content > div > label {
-            color: #FFFFFF !important;
-            font-weight: 600 !important;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
-        }
-        
-        /* Radio button and option styling */
-        .survey-section-content .stRadio > div > div > div {
-            color: #FFFFFF !important;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
         }
     </style>
     """,
@@ -473,8 +285,7 @@ if not st.session_state.get("demographics_completed"):
     st.markdown('</div>', unsafe_allow_html=True)
 
 else:
-    # Show saved demographics with proper alignment
-    st.markdown('<div class="aligned-demographics-title">✅ Your Information</div>', unsafe_allow_html=True)
+    # Show saved demographics
     st.markdown(
         f"""
         <div class="aligned-demographics-info">
@@ -487,7 +298,6 @@ else:
         unsafe_allow_html=True
     )
     
-    # Create aligned button container
     st.markdown('<div style="margin: 0.5rem 1.5rem;">', unsafe_allow_html=True)
     if st.button("🔄 Edit Demographics", key="edit_demographics"):
         st.session_state.demographics_completed = False
@@ -528,7 +338,7 @@ SECTION_SKILLS = {
         "Data privacy & confidentiality",
         "All of the above",
     ],
-    "Advanced_VDH_FDR_II_Skills_Important": [
+    "Advanced_VDH_FDR_II_FDR_III_Skills_Important": [
         "Complex case resolution",
         "Document verification",
         "Data analysis & reporting",
@@ -541,40 +351,48 @@ SECTION_SKILLS = {
 responses = {}
 
 for section_key, skills in SECTION_SKILLS.items():
-    section_name = section_key.replace("_Skills_Important", "").replace("_", " ")
+    # Get the proper section name for display
+    display_name = section_key.replace("_Skills_Important", "").replace("_", " ")
+    if "FDR II FDR III" in display_name:
+        display_name = "Advanced VDH FDRII"
+    elif "FDR1 and DLID" in display_name:
+        display_name = "FDRI/DLID"
     
     # Create gradient banner for section header
-    st.markdown(f'<div class="gradient-header">{section_name} Section</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="gradient-header">{display_name} Section</div>', unsafe_allow_html=True)
 
     # 1. Skills (multiple choice)
     responses[section_key] = st.radio(
-        f"1. What skills do you find most important for agents coming out of {section_name} training?",
+        f"1. What skills do you find most important for agents coming out of {display_name} training?",
         skills,
         key=f"{section_key}_skills",
     )
 
+    # Generate the correct column names for responses (matching CSV structure)
+    base_name = section_key.replace("_Skills_Important", "")
+    
     # 2. Challenges (open text)
-    responses[section_name + "_Challenges"] = st.text_area(
+    responses[base_name + "_Challenges"] = st.text_area(
         f"2. What specific challenges do they usually face when they return to their roles?",
         key=f"{section_key}_challenges",
     )
 
     # 3. Confidence (slider)
-    responses[section_name + "_Confidence"] = st.slider(
-        f"3. How confident are agents after completing the {section_name} class?",
+    responses[base_name + "_Confidence"] = st.slider(
+        f"3. How confident are agents after completing the {display_name} class?",
         1, 10, 5,
         key=f"{section_key}_confidence",
     )
 
     # 4. Expected Improvements (open text)
-    responses[section_name + "_Expected_Improvements"] = st.text_area(
-        f"4. After completing the {section_name} training, what improvements do you expect to see in agents’ performance?",
+    responses[base_name + "_Expected_Improvements"] = st.text_area(
+        f"4. After completing the {display_name} training, what improvements do you expect to see in agents' performance?",
         key=f"{section_key}_improvements",
     )
 
     # 5. Audit Issues (Yes/No + details)
     audit = st.radio(
-        f"5. Do agents in your center experience a high number of audit issues/errors from {section_name} transactions?",
+        f"5. Do agents in your center experience a high number of audit issues/errors from {display_name} transactions?",
         ["Yes", "No"],
         key=f"{section_key}_audit",
     )
@@ -584,7 +402,7 @@ for section_key, skills in SECTION_SKILLS.items():
             "If yes: Please describe the most common errors.",
             key=f"{section_key}_audit_details",
         )
-    responses[section_name + "_Audit_Issues"] = f"{audit} - {audit_details}"
+    responses[base_name + "_Audit_Issues"] = f"{audit} - {audit_details}"
 
 # ---------------- Onboarding ----------------
 st.markdown('<div class="gradient-header">Onboarding</div>', unsafe_allow_html=True)
@@ -634,50 +452,94 @@ st.markdown('</div>', unsafe_allow_html=True)
 # ---------------- Submit ----------------
 st.markdown('<div class="survey-section-content">', unsafe_allow_html=True)
 if st.button("Submit Survey"):
-    record = {
-        "SubmissionID": f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{st.session_state.get('user_name', '')}",
-        "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    }
-    record.update({
-        "User_Name": st.session_state.get('user_name', ''),
-        "User_Role": st.session_state.get('user_role', ''),
-        "CSC": st.session_state.get('user_csc', ''),
-        "User_Email": st.session_state.get('user_email', '')
-    })
-    record.update(responses)
-    record.update({
-        "Onboarding_Process_Description": onboarding_desc,
-        "Onboarding_Assigned_Coach": onboarding_coach,
-        "Onboarding_Coach_Support": onboarding_support,
-        "ELearning_Dedicated_Time": elearning_time,
-        "ELearning_Time_Details": elearning_details,
-        "OJT_Assessment_Success": ojt_assessment,
-        "OJT_Assessment_Details": ojt_details,
-        "AI_Survey_Experience_Rating": ai_rating,
-        "AI_Survey_Experience_Comments": ai_comments,
-        "Recommend_Survey_App": recommend,
-        "Why_Recommend_or_Not": recommend_why,
-    })
+    try:
+        record = {
+            "SubmissionID": f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{st.session_state.get('user_name', '')}",
+            "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        record.update({
+            "User_Name": st.session_state.get('user_name', ''),
+            "User_Role": st.session_state.get('user_role', ''),
+            "CSC": st.session_state.get('user_csc', ''),
+            "User_Email": st.session_state.get('user_email', '')
+        })
+        record.update(responses)
+        record.update({
+            "Onboarding_Process_Description": onboarding_desc,
+            "Onboarding_Assigned_Coach": onboarding_coach,
+            "Onboarding_Coach_Support": onboarding_support,
+            "ELearning_Dedicated_Time": elearning_time,
+            "ELearning_Time_Details": elearning_details,
+            "OJT_Assessment_Success": ojt_assessment,
+            "OJT_Assessment_Details": ojt_details,
+            "AI_Survey_Experience_Rating": ai_rating,
+            "AI_Survey_Experience_Comments": ai_comments,
+            "Recommend_Survey_App": recommend,
+            "Why_Recommend_or_Not": recommend_why,
+        })
 
-    # Save to CSV
-    if os.path.exists(CSV_FILE):
-        df = pd.read_csv(CSV_FILE)
-    else:
-        df = pd.DataFrame()
-    df = pd.concat([df, pd.DataFrame([record])], ignore_index=True)
-    df.to_csv(CSV_FILE, index=False)
+        # Ensure all columns exist in the dataframe to prevent column mismatch errors
+        expected_columns = [
+            "SubmissionID", "Timestamp", "User_Name", "User_Role", "CSC", "User_Email",
+            "Title_Class_Skills_Important", "Title_Class_Challenges", "Title_Class_Confidence", 
+            "Title_Class_Expected_Improvements", "Title_Class_Audit_Issues",
+            "FDR1_and_DLID_Skills_Important", "FDR1_and_DLID_Challenges", "FDR1_and_DLID_Confidence",
+            "FDR1_and_DLID_Expected_Improvements", "FDR1_and_DLID_Audit_Issues",
+            "Driver_Examiner_Skills_Important", "Driver_Examiner_Challenges", "Driver_Examiner_Confidence",
+            "Driver_Examiner_Expected_Improvements", "Driver_Examiner_Audit_Issues",
+            "Compliance_Skills_Important", "Compliance_Challenges", "Compliance_Confidence",
+            "Compliance_Expected_Improvements", "Compliance_Audit_Issues",
+            "Advanced_VDH_FDR_II_FDR_III_Skills_Important", "Advanced_VDH_FDR_II_FDR_III_Challenges", 
+            "Advanced_VDH_FDR_II_FDR_III_Confidence", "Advanced_VDH_FDR_II_FDR_III_Expected_Improvements", 
+            "Advanced_VDH_FDR_II_FDR_III_Audit_Issues",
+            "Onboarding_Process_Description", "Onboarding_Assigned_Coach", "Onboarding_Coach_Support",
+            "ELearning_Dedicated_Time", "ELearning_Time_Details", "OJT_Assessment_Success", "OJT_Assessment_Details",
+            "AI_Survey_Experience_Rating", "AI_Survey_Experience_Comments", "Recommend_Survey_App", "Why_Recommend_or_Not"
+        ]
+        
+        # Fill missing columns with empty strings
+        for col in expected_columns:
+            if col not in record:
+                record[col] = ""
 
-    # Save to Excel
-    if os.path.exists(EXCEL_FILE):
-        df_excel = pd.read_excel(EXCEL_FILE)
-    else:
-        df_excel = pd.DataFrame()
-    df_excel = pd.concat([df_excel, pd.DataFrame([record])], ignore_index=True)
-    df_excel.to_excel(EXCEL_FILE, index=False)
+        # Save to CSV with error handling
+        try:
+            if os.path.exists(CSV_FILE):
+                df = pd.read_csv(CSV_FILE)
+            else:
+                df = pd.DataFrame()
+            
+            new_df = pd.concat([df, pd.DataFrame([record])], ignore_index=True)
+            new_df.to_csv(CSV_FILE, index=False)
+            st.success("✅ Data successfully saved to CSV!")
+        except Exception as e:
+            st.error(f"❌ Error saving to CSV: {str(e)}")
 
-    st.success("✅ Success! Your survey response has been submitted.")
-    st.markdown("### 💝 Thank You! From Stephanie & Morgan")
-    st.write("We really appreciate the time you took to provide your valuable feedback to help us continuously improve our training programs!")
-    st.balloons()
+        # Save to Excel with error handling
+        try:
+            if os.path.exists(EXCEL_FILE):
+                df_excel = pd.read_excel(EXCEL_FILE)
+            else:
+                df_excel = pd.DataFrame()
+            
+            new_df_excel = pd.concat([df_excel, pd.DataFrame([record])], ignore_index=True)
+            new_df_excel.to_excel(EXCEL_FILE, index=False)
+            st.success("✅ Data successfully saved to Excel!")
+        except Exception as e:
+            st.error(f"❌ Error saving to Excel: {str(e)}")
+
+        st.success("✅ Success! Your survey response has been submitted and saved.")
+        st.markdown("### 💝 Thank You! From Stephanie & Morgan")
+        st.write("We really appreciate the time you took to provide your valuable feedback to help us continuously improve our training programs!")
+        st.balloons()
+        
+        # Clear the session state for a fresh start
+        for key in st.session_state.keys():
+            if key.startswith(('Title_', 'FDR1_', 'Driver_', 'Compliance_', 'Advanced_')):
+                del st.session_state[key]
+
+    except Exception as e:
+        st.error(f"❌ An error occurred while submitting your survey: {str(e)}")
+        st.info("Please try again or contact support if the problem persists.")
 
 st.markdown('</div>', unsafe_allow_html=True)

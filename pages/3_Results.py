@@ -166,7 +166,7 @@ def render_results_dashboard() -> None:
         "🚗 FDRI/DLID": "FDR1_and_DLID_Skills_Important",
         "👨‍💼 Driver Examiner": "Driver_Examiner_Skills_Important",
         "✅ Compliance": "Compliance_Skills_Important",
-        "🚀 Advanced VDH FDRII": "Advanced_VDH_FDR_II_Skills_Important",
+        "🚀 Advanced VDH FDRII": "Advanced_VDH_FDR_II_FDR_III_Skills_Important",
     }
     
     skills_data_exists = False
@@ -219,7 +219,7 @@ def render_results_dashboard() -> None:
                 section_name = "Driver Examiner"
             elif "Compliance" in section_name:
                 section_name = "Compliance"
-            elif "Advanced" in section_name:
+            elif "Advanced" in section_name or "FDR_II_FDR_III" in section_name:
                 section_name = "Advanced VDH FDRII"
             audit_sections.append(section_name)
         
