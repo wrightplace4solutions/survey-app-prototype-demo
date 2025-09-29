@@ -331,6 +331,42 @@ st.markdown(
             color: #FFFFFF !important;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
+        
+        /* Left-align bullet points flush with banner container */
+        .aligned-content {
+            margin: 0 1.5rem;
+            padding: 0;
+        }
+        
+        .aligned-content ul {
+            margin: 0;
+            padding-left: 1.2rem;
+            list-style-position: outside;
+        }
+        
+        .aligned-content li {
+            margin-bottom: 0.5rem;
+            color: #FFFFFF !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* Aligned demographics title */
+        .aligned-demographics-title {
+            margin: 1rem 1.5rem 0.5rem 1.5rem;
+            color: #FFFFFF !important;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* Aligned demographics info container */
+        .aligned-demographics-info {
+            background: rgba(255,255,255,0.7);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0 1.5rem 0.5rem 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
     </style>
     """,
     unsafe_allow_html=True,
@@ -349,21 +385,28 @@ st.markdown(
 
 # Instructions section
 st.markdown('<div class="gradient-header">📋 Instructions</div>', unsafe_allow_html=True)
-st.write("""
-- This survey should take about 10 minutes
-- Please complete your demographics below to begin the survey
-- All responses are confidential and will help improve our training programs
-""")
+st.markdown(
+    """
+    <div class="aligned-content">
+        <ul>
+            <li>This survey should take about 10 minutes</li>
+            <li>Please complete your demographics below to begin the survey</li>
+            <li>All responses are confidential and will help improve our training programs</li>
+        </ul>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Demographics Collection (expandable after CSC selection)
 st.markdown('<div class="gradient-header">👤 Demographics</div>', unsafe_allow_html=True)
-st.markdown('<div class="demographics-container">', unsafe_allow_html=True)
 
 # Initialize session state
 if "demographics_completed" not in st.session_state:
     st.session_state.demographics_completed = False
 
 if not st.session_state.get("demographics_completed"):
+    st.markdown('<div class="demographics-container">', unsafe_allow_html=True)
     st.markdown('<p style="color: #37474f; font-weight: 600;">Please select your CSC location to proceed with the survey.</p>', unsafe_allow_html=True)
     
     with st.form("demographics_form"):
@@ -399,13 +442,15 @@ if not st.session_state.get("demographics_completed"):
                 st.success("✅ Demographics saved! Survey unlocked below.")
                 st.balloons()
                 st.rerun()
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
 else:
-    # Show saved demographics (expandable)
-    st.markdown("### ✅ Your Information")
+    # Show saved demographics with proper alignment
+    st.markdown('<div class="aligned-demographics-title">✅ Your Information</div>', unsafe_allow_html=True)
     st.markdown(
         f"""
-        <div style='background: rgba(255,255,255,0.7); padding: 1rem; border-radius: 8px; margin: 0.5rem 0;'>
+        <div class="aligned-demographics-info">
             <strong>📛 Name:</strong> {st.session_state.get('user_name', '')}<br>
             <strong>👔 Role/Title:</strong> {st.session_state.get('user_role', '')}<br>
             <strong>🏢 CSC:</strong> {st.session_state.get('user_csc', '')}<br>
@@ -415,11 +460,12 @@ else:
         unsafe_allow_html=True
     )
     
+    # Create aligned button container
+    st.markdown('<div style="margin: 0.5rem 1.5rem;">', unsafe_allow_html=True)
     if st.button("🔄 Edit Demographics", key="edit_demographics"):
         st.session_state.demographics_completed = False
         st.rerun()
-
-st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Only show survey if demographics completed
 if not st.session_state.get("demographics_completed"):
