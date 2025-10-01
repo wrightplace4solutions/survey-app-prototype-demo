@@ -19,6 +19,13 @@ st.markdown(
             min-height: 100vh;
             position: relative;
         }
+
+        /* Constrain main column for large screens and improve horizontal rhythm */
+        main .block-container {
+            max-width: min(1100px, 96vw);
+            margin: 0 auto;
+            padding: clamp(1.25rem, 2vw, 2.25rem) clamp(0.75rem, 4vw, 2.25rem) 4rem;
+        }
         
         /* Header styling with gradient glowing effect */
         .main-header {
@@ -83,7 +90,8 @@ st.markdown(
             background: linear-gradient(135deg, #FFFEF7 0%, #F8F6F0 100%);
             padding: 2rem;
             border-radius: 8px;
-            margin: 1.5rem;
+            margin: 1.5rem auto;
+            max-width: 900px;
             box-shadow: 
                 0 4px 15px rgba(139, 38, 53, 0.2),
                 inset 0 1px 0 rgba(255,255,255,0.8);
@@ -120,7 +128,7 @@ st.markdown(
             text-align: center;
             font-weight: 700;
             font-size: 1.3em;
-            margin: 2rem 1.5rem 1rem 1.5rem;
+            margin: 2rem auto 1rem auto;
             padding: 1.5rem 2rem;
             border-radius: 12px;
             box-shadow: 
@@ -129,6 +137,7 @@ st.markdown(
                 0 4px 15px rgba(0,0,0,0.2);
             border: 1px solid rgba(255,255,255,0.2);
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            max-width: 900px;
         }
         
         @keyframes gradientText {
@@ -137,38 +146,32 @@ st.markdown(
             100% { background-position: 0% 50%; }
         }
         
-        .content-container p, .content-container div {
-            color: #FFFFFF !important;
+        .content-container p,
+        .content-container div,
+        .content-container li {
+            color: #2F1B14 !important;
             line-height: 1.6;
-            font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-weight: 500;
+            text-shadow: none;
         }
         
         /* Flush-aligned text under banners */
         .banner-text {
             color: #FFFFFF !important;
             text-align: left;
-            margin: 1rem 1.5rem;
+            margin: 1rem auto;
             padding: 0 2rem;
             line-height: 1.6;
             font-weight: 600;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            max-width: 900px;
+        }
+
+        .banner-text--indented {
+            padding-left: clamp(1.5rem, 5vw, 4rem);
         }
         
         /* Centered button container */
-        .centered-buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            margin: 2rem 1.5rem;
-        }
-        
-        .centered-buttons .stButton {
-            flex: 0 0 auto;
-            min-width: 200px;
-        }
-        
         /* Centered QR Code styling */
         .qr-container {
             display: flex;
@@ -177,6 +180,8 @@ st.markdown(
             justify-content: center;
             margin: 2rem auto;
             text-align: center;
+            max-width: 320px;
+            width: 100%;
         }
         
         .qr-caption {
@@ -189,8 +194,23 @@ st.markdown(
         
         /* General text styling for better visibility on burgundy background */
         p, div:not(.stButton) {
-            color: #FFFFFF !important;
+            color: #F9F5F2 !important;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .stVideo iframe, .stVideo video {
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100% !important;
+            min-height: clamp(220px, 45vw, 420px);
+        }
+
+        .qr-container img {
+            border-radius: 12px;
+            box-shadow: 0 6px 30px rgba(0,0,0,0.35);
+            width: 100%;
+            height: auto;
+            max-width: 260px;
         }
         
         /* Navigation buttons with Results page style */
@@ -216,6 +236,101 @@ st.markdown(
                 0 6px 20px rgba(139, 38, 53, 0.4),
                 inset 0 1px 0 rgba(255,255,255,0.3);
             background: linear-gradient(135deg, #8B2635 0%, #2F1B14 100%);
+        }
+
+        /* Responsive layout adjustments */
+        @media (max-width: 1024px) {
+            main .block-container {
+                padding: 1.5rem 1.5rem 3rem;
+            }
+
+            .main-header {
+                margin: 1.5rem auto;
+                padding: 1.75rem 1.25rem;
+            }
+
+            .gradient-header {
+                margin: 1.5rem auto 0.75rem auto;
+                padding: 1.25rem 1.5rem;
+            }
+
+        }
+
+        @media (max-width: 768px) {
+            main .block-container {
+                padding: 1.25rem 0.85rem 2.5rem;
+            }
+
+            .main-header {
+                margin: 1rem auto;
+                padding: 1.5rem 1rem;
+            }
+
+            .main-header h1 {
+                font-size: 1.9em;
+            }
+
+            .main-header h3 {
+                font-size: 1.1em;
+            }
+
+            .gradient-header {
+                font-size: 1.1em;
+                margin: 1.25rem auto 0.5rem auto;
+                padding: 1rem 1.15rem;
+            }
+
+            .banner-text {
+                margin: 0.85rem auto;
+                padding: 0 1rem;
+                text-align: center;
+            }
+
+            .banner-text--indented {
+                padding-left: 1rem;
+            }
+
+            .content-container {
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+
+            .content-container::before {
+                display: none;
+            }
+
+            .qr-container {
+                margin: 1.5rem 0;
+                max-width: 240px;
+            }
+
+            .stButton > button {
+                font-size: 1em;
+                padding: 0.9rem 1.25rem;
+            }
+
+            [data-testid="column"] {
+                flex: 1 1 100% !important;
+                min-width: 100% !important;
+            }
+        }
+
+        @media (max-width: 540px) {
+            main .block-container {
+                padding: 1.1rem 0.65rem 2.25rem;
+            }
+
+            .main-header h1 {
+                font-size: 1.7em;
+            }
+
+            .gradient-header {
+                padding: 0.9rem 1rem;
+            }
+
+            .stButton > button {
+                padding: 0.85rem 1.1rem;
+            }
         }
     </style>
     """,
@@ -253,34 +368,42 @@ st.markdown(
 # How to Use This System
 st.markdown('<div class="gradient-header">🚀 How To Use This System:</div>', unsafe_allow_html=True)
 
-# Center the buttons using custom CSS container with slight right shift
-st.markdown('<div class="centered-buttons">', unsafe_allow_html=True)
-col1, col2, col3 = st.columns([1.3, 2, 0.7])
+# Center navigation buttons with responsive column layout
+col_take, col_results = st.columns(2, gap="large")
+with col_take:
+    if st.button(
+        "📝 Take Survey",
+        key="survey_nav",
+        help="Complete the comprehensive training feedback survey",
+        use_container_width=True,
+    ):
+        st.switch_page("pages/2_Survey.py")
 
-with col2:
-    subcol1, subcol2 = st.columns(2)
-    with subcol1:
-        if st.button("📝 Take Survey", key="survey_nav", help="Complete the comprehensive training feedback survey"):
-            st.switch_page("pages/2_Survey.py")
-    
-    with subcol2:
-        if st.button("📊 View Results", key="results_nav", help="Analyze survey results and trends (for administrators)"):
-            st.switch_page("pages/3_Results.py")
-
-st.markdown('</div>', unsafe_allow_html=True)
+with col_results:
+    if st.button(
+        "📊 View Results",
+        key="results_nav",
+        help="Analyze survey results and trends (for administrators)",
+        use_container_width=True,
+    ):
+        st.switch_page("pages/3_Results.py")
 
 # Getting Started Section
 st.markdown('<div class="gradient-header">🎯 Getting Started</div>', unsafe_allow_html=True)
 
 st.markdown(
-    '<div class="banner-text" style="padding-left: 4rem;">In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.</div>',
+    '<div class="banner-text banner-text--indented">In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.</div>',
     unsafe_allow_html=True
 )
 
 # QR Code positioned to align right edge with "Started" text
 if os.path.exists("assets/survey_qr.png"):
-    col1, col2, col3 = st.columns([1.2, 1, 0.8])
-    with col2:
-        st.image("assets/survey_qr.png", width=200, caption="Scan for quick access or visit survey.soulwaresystems.com ")
+    qr_left, qr_center, qr_right = st.columns([1, 1.1, 1])
+    with qr_center:
+        st.image(
+            "assets/survey_qr.png",
+            use_column_width=True,
+            caption="Scan for quick access or visit survey.soulwaresystems.com",
+        )
 else:
-    st.info("� QR Code will be displayed here (assets/survey_qr.png)")
+    st.info("🧾 QR Code will be displayed here (assets/survey_qr.png)")

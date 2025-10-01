@@ -27,6 +27,12 @@ st.markdown(
             min-height: 100vh;
             position: relative;
         }
+
+        main .block-container {
+            max-width: min(1150px, 96vw);
+            margin: 0 auto;
+            padding: clamp(1.25rem, 2vw, 2.5rem) clamp(0.75rem, 4vw, 2.25rem) 4.5rem;
+        }
         
         /* Header styling with granulated glowing effect */
         .main-header {
@@ -36,7 +42,8 @@ st.markdown(
             padding: 2rem;
             border-radius: 15px;
             text-align: center;
-            margin-bottom: 2rem;
+            margin: 2rem auto;
+            max-width: 940px;
             box-shadow: 
                 0 0 20px rgba(139, 38, 53, 0.4),
                 0 0 40px rgba(47, 27, 20, 0.3),
@@ -104,7 +111,7 @@ st.markdown(
             text-align: center;
             font-weight: 700;
             font-size: 1.3em;
-            margin: 2rem 1.5rem 1rem 1.5rem;
+            margin: 2rem auto 1rem auto;
             padding: 0.75rem 1rem;
             border-radius: 12px;
             box-shadow: 
@@ -126,7 +133,8 @@ st.markdown(
             background: linear-gradient(135deg, #6B1F2E 0%, #4A1621 100%);
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
-            margin: 0 1.5rem 0.5rem 1.5rem;
+            margin: 0 auto 0.5rem auto;
+            max-width: 940px;
             box-shadow: 
                 0 4px 15px rgba(139, 38, 53, 0.3),
                 inset 0 1px 0 rgba(255,255,255,0.1);
@@ -175,17 +183,20 @@ st.markdown(
         
         /* Survey content alignment */
         .survey-section-content {
-            margin: 0 1.5rem 1.5rem 1.5rem;
+            margin: 0 auto 1.5rem auto;
+            max-width: 940px;
             padding: 0;
         }
         
         .aligned-content {
-            margin: 0 1.5rem;
+            margin: 0 auto;
+            max-width: 940px;
             padding: 0 1rem;
         }
         
         .edit-demographics-container {
-            margin: 0.5rem 1.5rem 1rem 1.5rem;
+            margin: 0.5rem auto 1rem auto;
+            max-width: 940px;
             padding: 0;
         }
         
@@ -196,6 +207,7 @@ st.markdown(
         .stRadio > div,
         .stSlider {
             padding: 0.5rem !important;
+            border-radius: 6px !important;
         }
         
         /* Demographics form styling */
@@ -216,6 +228,110 @@ st.markdown(
             margin-bottom: 0.5rem;
             color: #FFFFFF !important;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Responsive layout adjustments */
+        @media (max-width: 1024px) {
+            main .block-container {
+                padding: 1.5rem 1.5rem 3.5rem;
+            }
+
+            .main-header {
+                margin: 1.75rem auto;
+                padding: 1.75rem 1.25rem;
+            }
+
+            .gradient-header {
+                margin: 1.5rem auto 0.75rem auto;
+                padding: 1rem 1.5rem;
+            }
+
+            .survey-section-content,
+            .aligned-content,
+            .aligned-demographics-info,
+            .edit-demographics-container {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main .block-container {
+                padding: 1.3rem 0.85rem 3rem;
+            }
+
+            .main-header {
+                margin: 1.5rem auto 1rem auto;
+                padding: 1.5rem 1rem;
+            }
+
+            .main-header h1 {
+                font-size: 1.9em;
+            }
+
+            .main-header h3 {
+                font-size: 1.1em;
+            }
+
+            .gradient-header {
+                font-size: 1.1em;
+                margin: 1.25rem auto 0.5rem auto;
+                padding: 0.95rem 1.2rem;
+            }
+
+            .aligned-content {
+                margin: 0 auto;
+                padding: 0 0.75rem;
+            }
+
+            .survey-section-content,
+            .aligned-demographics-info,
+            .edit-demographics-container {
+                margin: 0.25rem auto 1rem auto;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+
+            .stButton > button {
+                font-size: 1em;
+                padding: 0.85rem 1.1rem;
+            }
+
+            [data-testid="column"] {
+                flex: 1 1 100% !important;
+                min-width: 100% !important;
+            }
+
+            .stTextInput > div > div > input,
+            .stTextArea > div > div > textarea,
+            .stSelectbox > div > div > div {
+                font-size: 0.95rem !important;
+            }
+        }
+
+        @media (max-width: 540px) {
+            main .block-container {
+                padding: 1.1rem 0.65rem 2.5rem;
+            }
+
+            .main-header h1 {
+                font-size: 1.7em;
+            }
+
+            .aligned-content {
+                padding: 0 0.5rem;
+            }
+
+            .survey-section-content,
+            .aligned-demographics-info,
+            .edit-demographics-container {
+                padding-left: 0.35rem;
+                padding-right: 0.35rem;
+            }
+
+            .stTextArea > div > div > textarea {
+                min-height: 140px !important;
+            }
         }
     </style>
     """,

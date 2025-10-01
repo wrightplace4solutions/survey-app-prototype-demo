@@ -21,6 +21,12 @@ def render_results_dashboard() -> None:
                 min-height: 100vh;
             }
 
+            main .block-container {
+                max-width: min(1200px, 96vw);
+                margin: 0 auto;
+                padding: clamp(1.25rem, 2vw, 2.5rem) clamp(0.75rem, 4vw, 2.25rem) 4rem;
+            }
+
             section[data-testid="stSidebar"] {
                 background: rgba(30, 15, 20, 0.85);
                 backdrop-filter: blur(6px);
@@ -37,7 +43,7 @@ def render_results_dashboard() -> None:
                 padding: 2rem;
                 border-radius: 15px;
                 text-align: center;
-                margin: 2rem 1rem;
+                margin: 2rem auto;
                 box-shadow: 
                     0 0 20px rgba(139, 38, 53, 0.4),
                     0 0 40px rgba(47, 27, 20, 0.3),
@@ -46,6 +52,7 @@ def render_results_dashboard() -> None:
                 border: 1px solid rgba(255,255,255,0.3);
                 position: relative;
                 overflow: hidden;
+                max-width: 960px;
             }
 
             .main-header::before {
@@ -89,7 +96,7 @@ def render_results_dashboard() -> None:
                 text-align: center;
                 font-weight: 700;
                 font-size: 1.3em;
-                margin: 2rem 1.5rem 1rem 1.5rem;
+                margin: 2rem auto 1rem auto;
                 padding: 1.2rem 1.5rem;
                 border-radius: 12px;
                 box-shadow: 
@@ -98,6 +105,7 @@ def render_results_dashboard() -> None:
                     0 4px 15px rgba(0,0,0,0.2);
                 border: 1px solid rgba(255,255,255,0.2);
                 text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+                max-width: 960px;
             }
 
             .sub-header {
@@ -138,6 +146,71 @@ def render_results_dashboard() -> None:
             @keyframes rotate {
                 0% { transform: rotate(0deg); }
                 100% { transform: rotate(360deg); }
+            }
+
+            /* Responsive layout adjustments */
+            @media (max-width: 1024px) {
+                main .block-container {
+                    padding: 1.5rem 1.5rem 3.25rem;
+                }
+
+                .main-header {
+                    margin: 1.75rem auto;
+                    padding: 1.75rem 1.25rem;
+                }
+
+                .gradient-header {
+                    margin: 1.5rem auto 0.75rem auto;
+                    padding: 1rem 1.5rem;
+                }
+            }
+
+            @media (max-width: 768px) {
+                main .block-container {
+                    padding: 1.25rem 0.85rem 2.75rem;
+                }
+
+                .main-header {
+                    margin: 1.35rem auto 0.75rem auto;
+                    padding: 1.5rem 1rem;
+                }
+
+                .main-header h1 {
+                    font-size: 1.9em;
+                }
+
+                .main-header h3 {
+                    font-size: 1.1em;
+                }
+
+                .gradient-header {
+                    font-size: 1.1em;
+                    margin: 1.25rem auto 0.5rem auto;
+                    padding: 0.95rem 1.1rem;
+                }
+
+                div[data-testid="metric-container"] {
+                    margin-bottom: 0.75rem;
+                }
+
+                [data-testid="column"] {
+                    flex: 1 1 100% !important;
+                    min-width: 100% !important;
+                }
+            }
+
+            @media (max-width: 540px) {
+                main .block-container {
+                    padding: 1.1rem 0.65rem 2.5rem;
+                }
+
+                .main-header h1 {
+                    font-size: 1.75em;
+                }
+
+                .gradient-header {
+                    padding: 0.85rem 1rem;
+                }
             }
         </style>
         """,
