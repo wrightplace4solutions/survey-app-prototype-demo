@@ -129,7 +129,7 @@ st.markdown(
             font-weight: 700;
             font-size: 1.3em;
             margin: 2rem 1.5rem 1rem 1.5rem;
-            padding: 1.5rem 2rem;
+            padding: 0.75rem 1rem;
             border-radius: 12px;
             box-shadow: 
                 0 0 15px rgba(139, 38, 53, 0.3),
@@ -145,21 +145,21 @@ st.markdown(
             100% { background-position: 0% 50%; }
         }
         
-        /* Demographics section with Results page theme */
+        /* Demographics section with darker burgundy background */
         .aligned-demographics-info {
-            background: linear-gradient(135deg, #FFFEF7 0%, #F8F6F0 100%);
-            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, #6B1F2E 0%, #4A1621 100%);
+            padding: 0.75rem 1.5rem;
             border-radius: 8px;
             margin: 0 1.5rem 0.5rem 1.5rem;
             box-shadow: 
-                0 4px 15px rgba(139, 38, 53, 0.2),
-                inset 0 1px 0 rgba(255,255,255,0.8);
+                0 4px 15px rgba(139, 38, 53, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.1);
             border: 1px solid #8B2635;
         }
         
         .aligned-demographics-info strong {
-            color: #2F1B14 !important;
-            text-shadow: none !important;
+            color: #FFFFFF !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
         }
         
         .aligned-demographics-info br + strong {
@@ -199,18 +199,27 @@ st.markdown(
         
         /* Survey content alignment */
         .survey-section-content {
-            margin: 0 1.5rem 2rem 1.5rem;
+            margin: 0 1.5rem 1.5rem 1.5rem;
             padding: 0;
         }
         
         .aligned-content {
             margin: 0 1.5rem;
-            padding: 0 2rem;
+            padding: 0 1rem;
         }
         
         .edit-demographics-container {
             margin: 0.5rem 1.5rem 1rem 1.5rem;
             padding: 0;
+        }
+        
+        /* Streamlit input fields styling */
+        .stTextInput > div > div > input,
+        .stTextArea > div > div > textarea,
+        .stSelectbox > div > div > div,
+        .stRadio > div,
+        .stSlider {
+            padding: 0.5rem !important;
         }
         
         .aligned-content ul {
