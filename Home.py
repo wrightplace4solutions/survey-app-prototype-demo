@@ -303,7 +303,7 @@ st.markdown(
 
 # QR Code positioned to align right edge with "Started" text
 if os.path.exists("assets/survey_qr.png"):
-    col1, col2, col3 = st.columns([1.3, 1, 0.7])
+    col1, col2, col3 = st.columns([1.2, 1, 0.8])
     with col2:
         st.image("assets/survey_qr.png", width=200, caption="Scan for quick access or visit survey.soulwaresystems.com ")
 else:
