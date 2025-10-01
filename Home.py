@@ -305,6 +305,6 @@ st.markdown(
 if os.path.exists("assets/survey_qr.png"):
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
-        st.image("assets/survey_qr.png", width=200, caption="Scan for Quick Access")
+        st.image("assets/survey_qr.png", width=200, caption="Scan for quick access or visit survey.soulwaresystems.com ")
 else:
     st.info("� QR Code will be displayed here (assets/survey_qr.png)")
