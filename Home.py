@@ -296,13 +296,10 @@ st.markdown('</div>', unsafe_allow_html=True)
 # Getting Started Section
 st.markdown('<div class="gradient-header">🎯 Getting Started</div>', unsafe_allow_html=True)
 
-# Center-align the text with the Getting Started banner
-col1, col2, col3 = st.columns([1, 2, 1])
-with col2:
-    st.markdown(
-        '<div class="banner-text">In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.</div>',
-        unsafe_allow_html=True
-    )
+st.markdown(
+    '<div class="banner-text" style="padding-left: 2rem;">In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.</div>',
+    unsafe_allow_html=True
+)
 
 # QR Code placeholder with right shift for better alignment
 if os.path.exists("assets/survey_qr.png"):
