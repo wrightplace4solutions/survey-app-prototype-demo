@@ -275,11 +275,11 @@ st.markdown(
 )
 
 # How to Use This System
-st.markdown('<div class="gradient-header">🚀 How to Use This System:</div>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-header">🚀 How To Use This System:</div>', unsafe_allow_html=True)
 
-# Center the buttons using custom CSS container
+# Center the buttons using custom CSS container with slight right shift
 st.markdown('<div class="centered-buttons">', unsafe_allow_html=True)
-col1, col2, col3 = st.columns([1, 2, 1])
+col1, col2, col3 = st.columns([0.7, 2, 1.3])
 
 with col2:
     subcol1, subcol2 = st.columns(2)
@@ -295,14 +295,18 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 # Getting Started Section
 st.markdown('<div class="gradient-header">🎯 Getting Started</div>', unsafe_allow_html=True)
-st.markdown(
-    '<div class="banner-text">In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.</div>',
-    unsafe_allow_html=True
-)
 
-# QR Code placeholder
+# Center-align the text with right shift for better banner alignment
+col1, col2, col3 = st.columns([0.7, 2, 1.3])
+with col2:
+    st.markdown(
+        '<div class="banner-text">In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.</div>',
+        unsafe_allow_html=True
+    )
+
+# QR Code placeholder with right shift for better alignment
 if os.path.exists("assets/survey_qr.png"):
-    col1, col2, col3 = st.columns([1, 1, 1])
+    col1, col2, col3 = st.columns([0.7, 1, 1.3])
     with col2:
         st.image("assets/survey_qr.png", width=200, caption="Scan for Quick Access")
 else:
