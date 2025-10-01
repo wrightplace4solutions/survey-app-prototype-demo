@@ -449,9 +449,15 @@ recommend_why = st.text_area("4. Why or why not?")
 
 st.markdown('</div>', unsafe_allow_html=True)
 
+# ---------------- Review & Submit ----------------
+st.markdown('<div class="gradient-header">📝 Review Your Responses</div>', unsafe_allow_html=True)
+st.markdown('<div class="survey-section-content">', unsafe_allow_html=True)
+st.info("👀 Please review all your responses above. You can scroll up to make any changes before submitting.")
+st.markdown('</div>', unsafe_allow_html=True)
+
 # ---------------- Submit ----------------
 st.markdown('<div class="survey-section-content">', unsafe_allow_html=True)
-if st.button("Submit Survey"):
+if st.button("✅ Submit Survey", type="primary", use_container_width=True):
     try:
         record = {
             "SubmissionID": f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{st.session_state.get('user_name', '')}",
@@ -502,7 +508,7 @@ if st.button("Submit Survey"):
             if col not in record:
                 record[col] = ""
 
-        # Save to CSV with error handling
+        # Save to CSV silently
         try:
             if os.path.exists(CSV_FILE):
                 df = pd.read_csv(CSV_FILE)
@@ -511,11 +517,11 @@ if st.button("Submit Survey"):
             
             new_df = pd.concat([df, pd.DataFrame([record])], ignore_index=True)
             new_df.to_csv(CSV_FILE, index=False)
-            st.success("✅ Data successfully saved to CSV!")
         except Exception as e:
-            st.error(f"❌ Error saving to CSV: {str(e)}")
+            st.error(f"❌ Error saving data: {str(e)}")
+            st.stop()
 
-        # Save to Excel with error handling
+        # Save to Excel silently
         try:
             if os.path.exists(EXCEL_FILE):
                 df_excel = pd.read_excel(EXCEL_FILE)
@@ -524,19 +530,32 @@ if st.button("Submit Survey"):
             
             new_df_excel = pd.concat([df_excel, pd.DataFrame([record])], ignore_index=True)
             new_df_excel.to_excel(EXCEL_FILE, index=False)
-            st.success("✅ Data successfully saved to Excel!")
         except Exception as e:
-            st.error(f"❌ Error saving to Excel: {str(e)}")
+            st.error(f"❌ Error saving data: {str(e)}")
+            st.stop()
 
-        st.success("✅ Success! Your survey response has been submitted and saved.")
+        # Success celebration message
+        st.success("🎉 **Success! Your survey has been submitted!**")
         st.markdown("### 💝 Thank You! From Stephanie & Morgan")
-        st.write("We really appreciate the time you took to provide your valuable feedback to help us continuously improve our training programs!")
+        st.markdown("""
+        <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+            <p style="font-size: 1.1em; color: #FFFFFF; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                We really appreciate the time you took to provide your valuable feedback! 
+                Your insights will help us continuously improve our training programs.
+            </p>
+            <p style="font-size: 1.1em; color: #FFFFFF; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); margin-top: 1rem;">
+                📊 <strong>Want to see all survey results?</strong><br>
+                Visit the <strong>Results</strong> page from the menu on the left to view comprehensive analytics and insights!
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
         st.balloons()
         
-        # Clear the session state for a fresh start
-        for key in st.session_state.keys():
-            if key.startswith(('Title_', 'FDR1_', 'Driver_', 'Compliance_', 'Advanced_')):
-                del st.session_state[key]
+        # Clear the session state for a fresh start (optional - allows resubmission)
+        # Commented out to allow users to review their submission
+        # for key in list(st.session_state.keys()):
+        #     if key.startswith(('Title_', 'FDR1_', 'Driver_', 'Compliance_', 'Advanced_')):
+        #         del st.session_state[key]
 
     except Exception as e:
         st.error(f"❌ An error occurred while submitting your survey: {str(e)}")
