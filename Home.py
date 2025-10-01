@@ -297,13 +297,13 @@ st.markdown('</div>', unsafe_allow_html=True)
 st.markdown('<div class="gradient-header">🎯 Getting Started</div>', unsafe_allow_html=True)
 
 st.markdown(
-    '<div class="banner-text" style="padding-left: 2rem;">In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.</div>',
+    '<div class="banner-text" style="padding-left: 4rem;">In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.</div>',
     unsafe_allow_html=True
 )
 
-# QR Code placeholder with right shift for better alignment
+# QR Code placeholder with adjusted left positioning
 if os.path.exists("assets/survey_qr.png"):
-    col1, col2, col3 = st.columns([1.3, 1, 0.7])
+    col1, col2, col3 = st.columns([0.8, 1, 1.2])
     with col2:
         st.image("assets/survey_qr.png", width=200, caption="Scan for Quick Access")
 else:
