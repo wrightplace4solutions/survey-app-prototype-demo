@@ -4,10 +4,46 @@ Training Feedback Survey Application - Home Page.
 This is the main landing page featuring the AI introduction and navigation.
 """
 
-import os
+from pathlib import Path
+from typing import Optional
 import streamlit as st
 
 st.set_page_config(page_title="Training Feedback Survey", layout="wide")
+
+_ASSETS_DIR = Path(__file__).resolve().parent / "assets"
+_VIDEO_CANDIDATES = [
+    "avatar_intro.mp4",
+    "Survey Intro.mp4",
+]
+
+
+def _is_valid_media(path: Path) -> bool:
+    try:
+        return path.exists() and path.stat().st_size > 0
+    except OSError:
+        return False
+
+
+def _find_avatar_video() -> Optional[Path]:
+    for candidate in _VIDEO_CANDIDATES:
+        video_path = _ASSETS_DIR / candidate
+        if _is_valid_media(video_path):
+            return video_path
+
+    fallback_videos = sorted(
+        (
+            video
+            for video in _ASSETS_DIR.glob("*.mp4")
+            if video.name not in _VIDEO_CANDIDATES and _is_valid_media(video)
+        ),
+        key=lambda video: video.stat().st_mtime,
+        reverse=True,
+    )
+
+    return fallback_videos[0] if fallback_videos else None
+
+def _get_asset_path(filename: str) -> Path:
+    return _ASSETS_DIR / filename
 
 # Enhanced styling with tan clipboard design
 st.markdown(
@@ -351,13 +387,14 @@ st.markdown(
 # AI Introduction Video Section
 st.markdown('<div class="gradient-header">🤖 Meet Your AI Survey Assistant</div>', unsafe_allow_html=True)
 
-# Check if video file exists
-video_file = "assets/avatar_intro.mp4"
-if os.path.exists(video_file):
-    st.video(video_file)
+video_file = _find_avatar_video()
+if video_file:
+    st.video(str(video_file))
 else:
     st.info("🎬 AI Introduction Video will be displayed here")
-    st.markdown("*Video file: assets/avatar_intro.mp4*")
+    st.markdown(
+        "*Place your video in the 'assets' folder (e.g., avatar_intro.mp4 or Survey Intro.mp4).*"
+    )
 
 st.markdown('<div class="gradient-header">📋 Survey System</div>', unsafe_allow_html=True)
 st.markdown(
@@ -397,11 +434,12 @@ st.markdown(
 )
 
 # QR Code positioned to align right edge with "Started" text
-if os.path.exists("assets/survey_qr.png"):
+qr_path = _get_asset_path("survey_qr.png")
+if qr_path.exists():
     qr_left, qr_center, qr_right = st.columns([1, 1.1, 1])
     with qr_center:
         st.image(
-            "assets/survey_qr.png",
+            str(qr_path),
             use_container_width=True,
             caption="Scan for quick access or visit survey.soulwaresystems.com",
         )
