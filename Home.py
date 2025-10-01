@@ -296,8 +296,8 @@ st.markdown('</div>', unsafe_allow_html=True)
 # Getting Started Section
 st.markdown('<div class="gradient-header">🎯 Getting Started</div>', unsafe_allow_html=True)
 
-# Center-align the text with right shift for better banner alignment
-col1, col2, col3 = st.columns([1.3, 2, 0.7])
+# Center-align the text with the Getting Started banner
+col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     st.markdown(
         '<div class="banner-text">In case you missed the instructions from our AI Assistant, please scan the QR Code below for quick access to the survey.</div>',
