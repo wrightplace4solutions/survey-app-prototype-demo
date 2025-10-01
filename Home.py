@@ -402,7 +402,7 @@ if os.path.exists("assets/survey_qr.png"):
     with qr_center:
         st.image(
             "assets/survey_qr.png",
-            use_column_width=True,
+            use_container_width=True,
             caption="Scan for quick access or visit survey.soulwaresystems.com",
         )
 else:
