@@ -301,9 +301,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# QR Code placeholder centered under Getting Started text
+# QR Code positioned to align right edge with "Started" text
 if os.path.exists("assets/survey_qr.png"):
-    col1, col2, col3 = st.columns([1, 1, 1])
+    col1, col2, col3 = st.columns([0.5, 1, 1.5])
     with col2:
         st.image("assets/survey_qr.png", width=200, caption="Scan for quick access or visit survey.soulwaresystems.com ")
 else:
