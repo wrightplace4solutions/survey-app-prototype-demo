@@ -147,11 +147,24 @@ st.markdown(
         
         /* Demographics section with Results page theme */
         .aligned-demographics-info {
-            background: rgba(255,255,255,0.7);
-            padding: 1rem;
+            background: linear-gradient(135deg, #FFFEF7 0%, #F8F6F0 100%);
+            padding: 1.5rem 2rem;
             border-radius: 8px;
             margin: 0 1.5rem 0.5rem 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 
+                0 4px 15px rgba(139, 38, 53, 0.2),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            border: 1px solid #8B2635;
+        }
+        
+        .aligned-demographics-info strong {
+            color: #2F1B14 !important;
+            text-shadow: none !important;
+        }
+        
+        .aligned-demographics-info br + strong {
+            display: inline-block;
+            margin-top: 0.5rem;
         }
         
         /* Submit button styling */
@@ -192,6 +205,11 @@ st.markdown(
         
         .aligned-content {
             margin: 0 1.5rem;
+            padding: 0 2rem;
+        }
+        
+        .edit-demographics-container {
+            margin: 0.5rem 1.5rem 1rem 1.5rem;
             padding: 0;
         }
         
@@ -298,7 +316,7 @@ else:
         unsafe_allow_html=True
     )
     
-    st.markdown('<div style="margin: 0.5rem 1.5rem;">', unsafe_allow_html=True)
+    st.markdown('<div class="edit-demographics-container">', unsafe_allow_html=True)
     if st.button("🔄 Edit Demographics", key="edit_demographics"):
         st.session_state.demographics_completed = False
         st.rerun()
