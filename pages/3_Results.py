@@ -7,16 +7,148 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+st.set_page_config(page_title="Training Feedback Survey Results", layout="wide")
+
 DATA_FILE = "Updated_Training_Feedback_Survey_Template.csv"
 
 
 def render_results_dashboard() -> None:
-    # Unified header with improved styling
     st.markdown(
         """
-        <div style='text-align: center; padding: 20px; background: linear-gradient(90deg, #2F1B14, #8B2635); color: white; border-radius: 10px; margin-bottom: 30px;'>
-            <h1 style='margin: 0; font-size: 2.5em;'>📊 Training Feedback Survey Results</h1>
-            <h3 style='margin: 10px 0 0 0; font-weight: 300;'>Excellence Through Training - Data Analytics Dashboard</h3>
+        <style>
+            .stApp {
+                background: linear-gradient(135deg, #2F1B14 0%, #8B2635 50%, #2F1B14 100%);
+                min-height: 100vh;
+            }
+
+            section[data-testid="stSidebar"] {
+                background: rgba(30, 15, 20, 0.85);
+                backdrop-filter: blur(6px);
+            }
+
+            section[data-testid="stSidebar"] * {
+                color: #F8F6F0 !important;
+            }
+
+            .main-header {
+                background: linear-gradient(135deg, #2F1B14 0%, #8B2635 50%, #2F1B14 100%);
+                background-size: 200% 200%;
+                animation: gradientShift 4s ease infinite;
+                padding: 2rem;
+                border-radius: 15px;
+                text-align: center;
+                margin: 2rem 1rem;
+                box-shadow: 
+                    0 0 20px rgba(139, 38, 53, 0.4),
+                    0 0 40px rgba(47, 27, 20, 0.3),
+                    0 0 60px rgba(139, 38, 53, 0.2),
+                    0 8px 32px rgba(0,0,0,0.2);
+                border: 1px solid rgba(255,255,255,0.3);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .main-header::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+                animation: rotate 8s linear infinite;
+                pointer-events: none;
+            }
+
+            .main-header h1 {
+                color: white;
+                margin: 0;
+                font-size: 2.5em;
+                text-shadow: 
+                    0 0 10px rgba(255,255,255,0.5),
+                    2px 2px 4px rgba(0,0,0,0.7);
+                position: relative;
+                z-index: 2;
+            }
+
+            .main-header h3 {
+                color: rgba(255,255,255,0.95);
+                margin: 10px 0 0 0;
+                font-weight: 300;
+                text-shadow: 
+                    1px 1px 2px rgba(0,0,0,0.5);
+                position: relative;
+                z-index: 2;
+            }
+
+            .gradient-header {
+                background: linear-gradient(135deg, #8B2635 0%, #2F1B14 50%, #8B2635 100%);
+                background-size: 200% 200%;
+                animation: gradientText 3s ease infinite;
+                color: white;
+                text-align: center;
+                font-weight: 700;
+                font-size: 1.3em;
+                margin: 2rem 1.5rem 1rem 1.5rem;
+                padding: 1.2rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 
+                    0 0 15px rgba(139, 38, 53, 0.3),
+                    0 0 30px rgba(47, 27, 20, 0.2),
+                    0 4px 15px rgba(0,0,0,0.2);
+                border: 1px solid rgba(255,255,255,0.2);
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            }
+
+            .sub-header {
+                color: #FDF6F0;
+                font-weight: 600;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+                margin: 1.5rem 0 0.5rem 0;
+            }
+
+            div[data-testid="metric-container"] {
+                background: rgba(255,255,255,0.08);
+                border-radius: 12px;
+                padding: 1rem;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+                border: 1px solid rgba(255,255,255,0.15);
+            }
+
+            div[data-testid="metric-container"] * {
+                color: #FFFFFF !important;
+            }
+
+            div[data-testid="stDataFrame"] div {
+                color: #1E1E1E !important;
+            }
+
+            @keyframes gradientShift {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            @keyframes gradientText {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            @keyframes rotate {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        """
+        <div class="main-header">
+            <h1>📊 Training Feedback Survey Results</h1>
+            <h3>Excellence Through Training - Data Analytics Dashboard</h3>
         </div>
         """,
         unsafe_allow_html=True,
@@ -74,7 +206,7 @@ def render_results_dashboard() -> None:
         st.stop()
 
     # Overview with improved metrics
-    st.markdown("## 📈 Overview")
+    st.markdown('<div class="gradient-header">📈 Overview</div>', unsafe_allow_html=True)
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
@@ -115,7 +247,7 @@ def render_results_dashboard() -> None:
 
     # CSC distribution with improved styling
     if "CSC" in fdf.columns and not fdf["CSC"].dropna().empty:
-        st.markdown("## 🏢 Responses by Customer Service Center")
+        st.markdown('<div class="gradient-header">🏢 Responses by Customer Service Center</div>', unsafe_allow_html=True)
         csc_counts = fdf["CSC"].value_counts().reset_index()
         csc_counts.columns = ["CSC", "Responses"]
         
@@ -136,7 +268,7 @@ def render_results_dashboard() -> None:
     # Average Ratings with improved visualization
     rating_cols = [c for c in fdf.columns if "Confidence" in c or c == "AI_Survey_Experience_Rating"]
     if rating_cols:
-        st.markdown("## ⭐ Average Confidence Ratings")
+        st.markdown('<div class="gradient-header">⭐ Average Confidence Ratings</div>', unsafe_allow_html=True)
         avgs = fdf[rating_cols].mean(numeric_only=True).reset_index()
         avgs.columns = ["Question", "Average"]
         # Clean up column names for better display
@@ -176,7 +308,7 @@ def render_results_dashboard() -> None:
             break
     
     if skills_data_exists:
-        st.markdown("## 🎯 Skills Priority Analysis")
+        st.markdown('<div class="gradient-header">🎯 Skills Priority Analysis</div>', unsafe_allow_html=True)
         
         tabs = st.tabs(list(section_skill_cols.keys()))
         
@@ -205,7 +337,7 @@ def render_results_dashboard() -> None:
     # Audit Issues Breakdown with improved presentation
     audit_cols = [c for c in fdf.columns if c.endswith("_Audit_Issues")]
     if audit_cols:
-        st.markdown("## 🔍 Audit Issues Analysis")
+        st.markdown('<div class="gradient-header">🔍 Audit Issues Analysis</div>', unsafe_allow_html=True)
         
         audit_sections = []
         for col in audit_cols:
@@ -264,13 +396,13 @@ def render_results_dashboard() -> None:
                     st.info("No audit issue data available for this section.")
 
     # Enhanced Data Export Section
-    st.markdown("## 📥 Data Export & Raw Responses")
+    st.markdown('<div class="gradient-header">📥 Data Export & Raw Responses</div>', unsafe_allow_html=True)
     
     # Toggle for showing raw data
     show_raw_data = st.checkbox("🔍 Show Raw Response Data", help="Display the complete survey responses in table format")
     
     if show_raw_data:
-        st.markdown("### 📋 Complete Survey Responses")
+        st.markdown('<div class="sub-header">📋 Complete Survey Responses</div>', unsafe_allow_html=True)
         st.dataframe(
             fdf.style.highlight_max(axis=0, color='lightgreen'),
             use_container_width=True,
@@ -278,7 +410,7 @@ def render_results_dashboard() -> None:
         )
     
     # Export buttons with improved styling
-    st.markdown("### 💾 Download Options")
+    st.markdown('<div class="sub-header">💾 Download Options</div>', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     
     with col1:
@@ -308,7 +440,7 @@ def render_results_dashboard() -> None:
         )
     
     # Summary statistics
-    st.markdown("### 📊 Summary Statistics")
+    st.markdown('<div class="sub-header">📊 Summary Statistics</div>', unsafe_allow_html=True)
     if rating_cols:
         summary_stats = fdf[rating_cols].describe()
         st.dataframe(summary_stats.round(2), use_container_width=True)

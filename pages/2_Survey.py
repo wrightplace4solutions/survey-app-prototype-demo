@@ -28,30 +28,6 @@ st.markdown(
             position: relative;
         }
         
-        .stApp::before {
-            content: '';
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            background: 
-                linear-gradient(90deg, #8B2635 0px, #8B2635 2px, transparent 2px, transparent 100%),
-                linear-gradient(180deg, #8B2635 0px, #8B2635 2px, transparent 2px, transparent 100%);
-            border: 3px solid #8B2635;
-            border-radius: 8px;
-            box-shadow: 
-                inset 0 0 20px rgba(139, 38, 53, 0.1),
-                0 8px 32px rgba(0,0,0,0.2);
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        .stApp > div {
-            position: relative;
-            z-index: 1;
-        }
-        
         /* Header styling with granulated glowing effect */
         .main-header {
             background: linear-gradient(135deg, #2F1B14 0%, #8B2635 50%, #2F1B14 100%);
