@@ -1,14 +1,56 @@
-"""
+import os
+import streamlit as st
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+MESSAGES = {
+    "closed": "🚫 Survey is closed for now. Thanks for checking!",
+    "not_now": "⏳ This survey isn’t open right now.",
+    "prompt": "🔑 Enter Event Code",
+    "bad_code": "That code didn’t work. Please try again or ask the host.",
+    "bad_link": "This link is expired or invalid.",
+}
+
+SURVEY_OPEN = (st.secrets.get("SURVEY_OPEN", os.getenv("SURVEY_OPEN", "true")).lower() == "true")
+EVENT_CODE = st.secrets.get("SURVEY_PASS", os.getenv("SURVEY_PASS", "changeme"))
+
+# Kill switch
+if not SURVEY_OPEN:
+    st.title(MESSAGES["closed"])
+    st.stop()
+
+# Time window (optional)
+TZ = ZoneInfo("America/New_York")
+start = st.secrets.get("SURVEY_START")  # e.g. "2025-10-01 18:30"
+end = st.secrets.get("SURVEY_END")    # e.g. "2025-10-01 21:30"
+if start and end:
+    now = datetime.now(TZ)
+    s = datetime.fromisoformat(start).replace(tzinfo=TZ)
+    e = datetime.fromisoformat(end).replace(tzinfo=TZ)
+    if not (s <= now <= e):
+        st.title(MESSAGES["not_now"])
+        st.stop()
+
+# Passcode gate
+if not st.session_state.get("authed"):
+    st.title(MESSAGES["prompt"])
+    code = st.text_input("Code", type="password")
+    if st.button("Enter"):
+        if code == EVENT_CODE:
+            st.session_state["authed"] = True
+            st.rerun()
+        else:
+            st.error(MESSAGES["bad_code"])
+    st.stop()
+
+__doc__ = """
 Training Feedback Survey Page - Fixed Version
 
 Collects survey responses for Title Class, FDRI/DLID, Driver examiners,
 Compliance, and Advanced VDH FDRII training. Saves results to the master CSV + Excel.
 """
 
-import os
-from datetime import datetime
 import pandas as pd
-import streamlit as st
 
 # Master files (everything writes here)
 CSV_FILE = "Updated_Training_Feedback_Survey_Template.csv"
