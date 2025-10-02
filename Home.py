@@ -4,19 +4,24 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 MESSAGES = {
-    "closed": "🚫 Survey is closed for now. Thanks for checking!",
+    "closed": "🚫 This app is no longer available.",
     "not_now": "⏳ This survey isn’t open right now.",
     "prompt": "🔑 Enter Event Code",
     "bad_code": "That code didn’t work. Please try again or ask the host.",
     "bad_link": "This link is expired or invalid.",
 }
 
+
+def _message(key: str) -> str:
+    env_key = f"SURVEY_MESSAGE_{key.upper()}"
+    return st.secrets.get(env_key, os.getenv(env_key, MESSAGES[key]))
+
 SURVEY_OPEN = (st.secrets.get("SURVEY_OPEN", os.getenv("SURVEY_OPEN", "true")).lower() == "true")
 EVENT_CODE = st.secrets.get("SURVEY_PASS", os.getenv("SURVEY_PASS", "changeme"))
 
 # Kill switch
 if not SURVEY_OPEN:
-    st.title(MESSAGES["closed"])
+    st.title(_message("closed"))
     st.stop()
 
 # Time window (optional)
@@ -28,19 +33,19 @@ if start and end:
     s = datetime.fromisoformat(start).replace(tzinfo=TZ)
     e = datetime.fromisoformat(end).replace(tzinfo=TZ)
     if not (s <= now <= e):
-        st.title(MESSAGES["not_now"])
+        st.title(_message("not_now"))
         st.stop()
 
 # Passcode gate
 if not st.session_state.get("authed"):
-    st.title(MESSAGES["prompt"])
+    st.title(_message("prompt"))
     code = st.text_input("Code", type="password")
     if st.button("Enter"):
         if code == EVENT_CODE:
             st.session_state["authed"] = True
             st.rerun()
         else:
-            st.error(MESSAGES["bad_code"])
+            st.error(_message("bad_code"))
     st.stop()
 
 __doc__ = """
