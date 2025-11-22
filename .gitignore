@@ -1,37 +1,55 @@
-# Python cache files
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
+﻿# Windows system files
+NTUSER.DAT*
+ntuser.dat*
+ntuser.ini
 
-# Virtual environments
-.venv/
-venv/
-ENV/
-env/
+# User profile directories
+AppData/
+Documents/
+Downloads/
+Pictures/
+Videos/
+Music/
+Contacts/
+Favorites/
+Links/
+Searches/
+Saved Games/
+Tracing/
+IntelGraphicsProfiles/
+CrossDevice/
 
-# Backup files
-*_backup.py
-*.bak
-*.tmp
+# Windows system directories
+Application Data/
+Cookies/
+Local Settings/
+My Documents/
+NetHood/
+PrintHood/
+Recent/
+SendTo/
+Start Menu/
+Templates/
 
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
+# Development tools
+.codeium/
+.config/
+.git-for-windows-updater
+.gitconfig
+.gitlab/
+.gk/
+.lesshst
+.matplotlib/
+.viminfo
+scoop/
 
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# OneDrive sync
+Creative Cloud Files*/
 
-# Streamlit
+# VS Code and development
 .streamlit/
+.vscode/
 
-# Logs
-*.log
+# Desktop folder
+OneDrive/Desktop/
+OneDrive/
