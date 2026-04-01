@@ -1,0 +1,15 @@
+{
+  "socketPath": "\\\\.\\pipe\\mcp-8be94529-8391-41cb-83e1-4cb168150c74.sock",
+  "scheme": "pipe",
+  "headers": {
+    "Authorization": "Nonce 30d87af8-3a31-4252-bfbf-406d63d9f2bd"
+  },
+  "pid": 12572,
+  "ideName": "Visual Studio Code",
+  "timestamp": 1775049874904,
+  "workspaceFolders": [
+    "c:\\Users\\dcn8t\\OneDrive\\Desktop\\Vibe-Crate",
+    "c:\\Users\\dcn8t\\OneDrive\\Desktop\\Vibe-Que-App-Lovable"
+  ],
+  "isTrusted": true
+}
