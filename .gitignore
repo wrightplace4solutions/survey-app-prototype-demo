@@ -49,6 +49,8 @@ Creative Cloud Files*/
 # VS Code and development
 .streamlit/
 .vscode/
+.vscode-shared/
+.copilot/ide/
 
 # Desktop folder
 OneDrive/Desktop/
