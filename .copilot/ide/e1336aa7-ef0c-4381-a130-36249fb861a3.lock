@@ -1,0 +1,14 @@
+{
+  "socketPath": "\\\\.\\pipe\\mcp-3eb56e7d-b388-4352-b6a8-f4546af893e5.sock",
+  "scheme": "pipe",
+  "headers": {
+    "Authorization": "Nonce 96247fae-16f8-4bf0-a848-b01fe2fc6d7e"
+  },
+  "pid": 33448,
+  "ideName": "Visual Studio Code",
+  "timestamp": 1780506143699,
+  "workspaceFolders": [
+    "c:\\Users\\dcn8t\\OneDrive\\Desktop\\Vibe Zone Website Lovable"
+  ],
+  "isTrusted": true
+}
